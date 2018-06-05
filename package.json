@@ -1,0 +1,19 @@
+{
+  "name": "objectivize",
+  "version": "1.0.0",
+  "description": "An object-manipulation utility library",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryandabler/objectivize.git"
+  },
+  "author": "Ryan Dabler <r.p.dabler@gmail.com> (https://ryandabler.github.io)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ryandabler/objectivize/issues"
+  },
+  "homepage": "https://github.com/ryandabler/objectivize#readme"
+}
