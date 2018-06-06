@@ -1,5 +1,7 @@
 "use strict";
 
+const { types, typeOf } = require("tupos");
+
 /**
 * Retrieves the value from a nested object given a path.
 * 
