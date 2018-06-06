@@ -57,6 +57,7 @@ const resolvePathAndSet = (val, path) => {
 * @param {Object} subObj Object being merged
 * @returns {Object}
 */
+// TODO: If there are two identical paths, the two onto an array. Issue #2
 const mergeObjects = (mainObj, subObj) => {
     let retObj = { ...mainObj };
     for (const key in subObj) {
