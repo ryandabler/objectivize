@@ -104,7 +104,7 @@ const destructure = (obj, path = null) => {
  * 
  * @param {Object} obj Object to be copied
  */
-// TODO: Make this a deep copy. Issue #9
+// TODO: Make this a deep copy. Issue #1
 const copyObject = obj => {
     const paths = destructure(obj);
     let retObj = {};
