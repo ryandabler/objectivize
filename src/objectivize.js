@@ -117,3 +117,11 @@ const copyObject = obj => {
 
     return retObj;
 }
+
+module.exports = {
+    resolvePathAndGet,
+    resolvePathAndSet,
+    mergeObjects,
+    destructure,
+    copyObject
+};
