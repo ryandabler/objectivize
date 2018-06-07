@@ -57,12 +57,18 @@ const resolvePathAndSet = (val, path) => {
 * @param {Object} subObj Object being merged
 * @returns {Object}
 */
-// TODO: If there are two identical paths, the two onto an array. Issue #2
-const mergeObjects = (mainObj, subObj) => {
+var mergeObjects = (mainObj, subObj) => {
     let retObj = { ...mainObj };
     for (const key in subObj) {
-        if (key in mainObj) {
-            retObj[key] = mergeObjects(mainObj[key], subObj[key]);
+        if (key in retObj &&
+            typeOf(retObj[key]) === types.OBJECT &&
+            typeOf(subObj[key]) === types.OBJECT
+        ) {
+            retObj[key] = mergeObjects(retObj[key], subObj[key]);
+        } else if (key in retObj && typeOf(retObj[key]) === types.ARRAY) {
+            retObj[key] = retObj[key].concat(subObj[key]);
+        } else if (key in retObj) {
+            retObj[key] = [ retObj[key], subObj[key] ];
         } else {
             retObj = { ...retObj, [key]: subObj[key] };
         }
