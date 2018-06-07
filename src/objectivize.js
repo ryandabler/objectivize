@@ -48,9 +48,10 @@ const resolvePathAndSet = (val, path) => {
 /**
 * Merges an object of arbitrary depth into another object.
 * 
-* Traverses the main object, ensuring that the key in subObj is
+* Traverses the keys in subObj, ensuring that each one is
 * in mainObj, and recursively merging the next layer of each object.
-* When a key is found in subObj that isn't in mainObj, the two 
+* If both objects have the same path, the values will be merged into
+* an array. When a key is found in subObj that isn't in mainObj, the two 
 * can be safely merged and the merged object is returned.
 * 
 * @param {Object} mainObj Object to have other object merged into
@@ -74,7 +75,7 @@ var mergeObjects = (mainObj, subObj) => {
             retObj = { ...retObj, [key]: subObj[key] };
         }
     }
-    
+
     return retObj;
 }
 
