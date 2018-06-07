@@ -73,6 +73,7 @@ var mergeObjects = (mainObj, subObj) => {
             retObj = { ...retObj, [key]: subObj[key] };
         }
     }
+    
     return retObj;
 }
 
