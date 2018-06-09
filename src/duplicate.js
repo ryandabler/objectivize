@@ -1,0 +1,1 @@
+const duplicateString = str => str
