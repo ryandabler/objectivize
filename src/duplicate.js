@@ -16,9 +16,14 @@ const duplicateObject = obj => {
     return retObj;
 }
 
+const duplicateArray = arr => {
+    return arr.map(item => duplicate[typeOf(item)](item));
+}
+
 const duplicate = {
     [types.String]: duplicateString,
     [types.Number]: duplicateNumber,
     [types.Date]: duplicateDate,
-    [types.Object]: duplicateObject
+    [types.Object]: duplicateObject,
+    [types.Array]: duplicateArray
 }
