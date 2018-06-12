@@ -17,8 +17,8 @@ const duplicateObject = obj => {
 }
 
 const duplicate = {
-    [type.String]: duplicateString,
-    [type.Number]: duplicateNumber,
-    [type.Date]: duplicateDate,
-    [type.Object]: duplicateObject
+    [types.String]: duplicateString,
+    [types.Number]: duplicateNumber,
+    [types.Date]: duplicateDate,
+    [types.Object]: duplicateObject
 }
