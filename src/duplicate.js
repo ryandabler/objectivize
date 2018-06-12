@@ -1,4 +1,4 @@
-const { types } = require("tupos");
+const { types, typeOf } = require("tupos");
 
 const duplicateString = str => str
 
