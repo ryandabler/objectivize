@@ -20,10 +20,14 @@ const duplicateArray = arr => {
     return arr.map(item => duplicate[typeOf(item)](item));
 }
 
+const duplicateMapType = constructor => map => new constructor(map)
+
 const duplicate = {
     [types.String]: duplicateString,
     [types.Number]: duplicateNumber,
     [types.Date]: duplicateDate,
     [types.Object]: duplicateObject,
-    [types.Array]: duplicateArray
+    [types.Array]: duplicateArray,
+    [types.Map]: duplicateMapType(Map),
+    [types.WeakMap]: duplicateMapType(WeakMap)
 }
