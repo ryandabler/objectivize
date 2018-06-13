@@ -27,14 +27,14 @@ const duplicateMapType = constructor => map => new constructor(map)
 const duplicateSetType = constructor => set => new constructor(set)
 
 const duplicate = {
-    [types.String]: duplicateString,
-    [types.Number]: duplicateNumber,
-    [types.Boolean]: duplicateBoolean,
-    [types.Date]: duplicateDate,
-    [types.Object]: duplicateObject,
-    [types.Array]: duplicateArray,
-    [types.Map]: duplicateMapType(Map),
-    [types.WeakMap]: duplicateMapType(WeakMap),
-    [types.Set]: duplicateSetType(Set),
-    [types.WeakSet]: duplicateSetType(WeakSet)
+    [types.STRING]: duplicateString,
+    [types.NUMBER]: duplicateNumber,
+    [types.BOOLEAN]: duplicateBoolean,
+    [types.DATE]: duplicateDate,
+    [types.OBJECT]: duplicateObject,
+    [types.ARRAY]: duplicateArray,
+    [types.MAP]: duplicateMapType(Map),
+    [types.WEAKMAP]: duplicateMapType(WeakMap),
+    [types.SET]: duplicateSetType(Set),
+    [types.WEAKSET]: duplicateSetType(WeakSet)
 }
