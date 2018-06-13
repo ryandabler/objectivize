@@ -4,6 +4,8 @@ const duplicateString = str => str
 
 const duplicateNumber = num => num
 
+const duplicateBoolean = bool => bool
+
 const duplicateDate = dt => new Date(dt)
 
 const duplicateObject = obj => {
@@ -27,6 +29,7 @@ const duplicateSetType = constructor => set => new constructor(set)
 const duplicate = {
     [types.String]: duplicateString,
     [types.Number]: duplicateNumber,
+    [types.Boolean]: duplicateBoolean,
     [types.Date]: duplicateDate,
     [types.Object]: duplicateObject,
     [types.Array]: duplicateArray,
