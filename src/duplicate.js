@@ -6,6 +6,8 @@ const duplicateNumber = num => num
 
 const duplicateBoolean = bool => bool
 
+const duplicateNull = nl => nl
+
 const duplicateDate = dt => new Date(dt)
 
 const duplicateObject = obj => {
@@ -30,6 +32,7 @@ const duplicate = {
     [types.STRING]: duplicateString,
     [types.NUMBER]: duplicateNumber,
     [types.BOOLEAN]: duplicateBoolean,
+    [types.NULL]: duplicateNull,
     [types.DATE]: duplicateDate,
     [types.OBJECT]: duplicateObject,
     [types.ARRAY]: duplicateArray,
