@@ -22,6 +22,8 @@ const duplicateArray = arr => {
 
 const duplicateMapType = constructor => map => new constructor(map)
 
+const duplicateSetType = constructor => set => new constructor(set)
+
 const duplicate = {
     [types.String]: duplicateString,
     [types.Number]: duplicateNumber,
@@ -29,5 +31,7 @@ const duplicate = {
     [types.Object]: duplicateObject,
     [types.Array]: duplicateArray,
     [types.Map]: duplicateMapType(Map),
-    [types.WeakMap]: duplicateMapType(WeakMap)
+    [types.WeakMap]: duplicateMapType(WeakMap),
+    [types.Set]: duplicateSetType(Set),
+    [types.WeakSet]: duplicateSetType(WeakSet)
 }
