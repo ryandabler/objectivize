@@ -152,5 +152,6 @@ module.exports = {
     resolvePathAndSet,
     mergeObjects,
     destructure,
-    copyObject
+    copyObject,
+    deepEquals
 };
