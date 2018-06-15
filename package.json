@@ -21,6 +21,6 @@
     "mocha": "^5.2.0"
   },
   "dependencies": {
-    "tupos": "^1.0.1"
+    "tupos": "^1.1.0"
   }
 }
