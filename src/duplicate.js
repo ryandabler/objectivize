@@ -10,6 +10,8 @@ const duplicateNull = nl => nl
 
 const duplicateUndefined = undef => undef
 
+const duplicateFunction = func => Function("return " + func)()
+
 const duplicateRegExp = regex => new RegExp(regex.source, regex.flags)
 
 const duplicateDate = dt => new Date(dt)
@@ -38,6 +40,7 @@ const duplicate = {
     [types.BOOLEAN]: duplicateBoolean,
     [types.NULL]: duplicateNull,
     [types.UNDEFINED]: duplicateUndefined,
+    [typs.FUNCTION]: duplicateFunction,
     [types.REGEXP]: duplicateRegExp,
     [types.DATE]: duplicateDate,
     [types.OBJECT]: duplicateObject,
