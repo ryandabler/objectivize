@@ -48,5 +48,6 @@ const duplicate = {
     [types.MAP]: duplicateMapType(Map),
     [types.WEAKMAP]: duplicateMapType(WeakMap),
     [types.SET]: duplicateSetType(Set),
-    [types.WEAKSET]: duplicateSetType(WeakSet)
+    [types.WEAKSET]: duplicateSetType(WeakSet),
+    [types.MATH]: identity
 }
