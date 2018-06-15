@@ -43,7 +43,7 @@ const duplicate = {
     [types.NULL]: duplicateNull,
     [types.UNDEFINED]: duplicateUndefined,
     [types.SYMBOL]: duplicateSymbol,
-    [typs.FUNCTION]: duplicateFunction,
+    [types.FUNCTION]: duplicateFunction,
     [types.REGEXP]: duplicateRegExp,
     [types.DATE]: duplicateDate,
     [types.OBJECT]: duplicateObject,
