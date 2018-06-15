@@ -32,6 +32,8 @@ const duplicateMapType = constructor => map => new constructor(map)
 
 const duplicateSetType = constructor => set => new constructor(set)
 
+const duplicatePromise = promise => promise.then()
+
 const duplicate = {
     [types.STRING]: identity,
     [types.NUMBER]: identity,
@@ -49,5 +51,6 @@ const duplicate = {
     [types.WEAKMAP]: duplicateMapType(WeakMap),
     [types.SET]: duplicateSetType(Set),
     [types.WEAKSET]: duplicateSetType(WeakSet),
-    [types.MATH]: identity
+    [types.MATH]: identity,
+    [types.PROMISE]: duplicatePromise
 }
