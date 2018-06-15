@@ -14,6 +14,12 @@ const duplicateSymbol = symbol => symbol
 
 const duplicateFunction = func => Function("return " + func)()
 
+const duplicateError = err => {
+    const newErr = new Error(err.message);
+    newErr.name = err.name;
+    return newErr;
+}
+
 const duplicateRegExp = regex => new RegExp(regex.source, regex.flags)
 
 const duplicateDate = dt => new Date(dt)
@@ -44,6 +50,7 @@ const duplicate = {
     [types.UNDEFINED]: duplicateUndefined,
     [types.SYMBOL]: duplicateSymbol,
     [types.FUNCTION]: duplicateFunction,
+    [types.ERROR]: duplicateError,
     [types.REGEXP]: duplicateRegExp,
     [types.DATE]: duplicateDate,
     [types.OBJECT]: duplicateObject,
