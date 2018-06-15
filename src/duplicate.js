@@ -1,16 +1,6 @@
 const { types, typeOf } = require("tupos");
 
-const duplicateString = str => str
-
-const duplicateNumber = num => num
-
-const duplicateBoolean = bool => bool
-
-const duplicateNull = nl => nl
-
-const duplicateUndefined = undef => undef
-
-const duplicateSymbol = symbol => symbol
+const identity = item => item
 
 const duplicateFunction = func => Function("return " + func)()
 
@@ -43,12 +33,12 @@ const duplicateMapType = constructor => map => new constructor(map)
 const duplicateSetType = constructor => set => new constructor(set)
 
 const duplicate = {
-    [types.STRING]: duplicateString,
-    [types.NUMBER]: duplicateNumber,
-    [types.BOOLEAN]: duplicateBoolean,
-    [types.NULL]: duplicateNull,
-    [types.UNDEFINED]: duplicateUndefined,
-    [types.SYMBOL]: duplicateSymbol,
+    [types.STRING]: identity,
+    [types.NUMBER]: identity,
+    [types.BOOLEAN]: identity,
+    [types.NULL]: identity,
+    [types.UNDEFINED]: identity,
+    [types.SYMBOL]: identity,
     [types.FUNCTION]: duplicateFunction,
     [types.ERROR]: duplicateError,
     [types.REGEXP]: duplicateRegExp,
