@@ -50,6 +50,8 @@ const duplicateTypedArray = constructor => typedArr => {
     return newTypedArr;
 }
 
+const duplicateArrayBuffer = arrBuff => new ArrayBuffer(arrBuff.length)
+
 const duplicate = {
     [types.STRING]: identity,
     [types.NUMBER]: identity,
@@ -77,5 +79,6 @@ const duplicate = {
     [types.INT32ARRAY]: duplicateTypedArray(Int32Array),
     [types.UINT32ARRAY]: duplicateTypedArray(Uint32Array),
     [types.FLOAT32ARRAY]: duplicateTypedArray(Float32Array),
-    [types.FLOAT64ARRAY]: duplicateTypedArray(Float64Array)
+    [types.FLOAT64ARRAY]: duplicateTypedArray(Float64Array),
+    [types.ARRAYBUFFER]: duplicateArrayBuffer
 }
