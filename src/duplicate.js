@@ -84,5 +84,6 @@ const duplicate = {
     [types.FLOAT32ARRAY]: duplicateTypedArray(Float32Array),
     [types.FLOAT64ARRAY]: duplicateTypedArray(Float64Array),
     [types.ARRAYBUFFER]: duplicateArrayBuffer,
-    [types.DATAVIEW]: duplicateDataView
+    [types.DATAVIEW]: duplicateDataView,
+    [types.JSON]: identity
 }
