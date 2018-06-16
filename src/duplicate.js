@@ -25,7 +25,12 @@ const duplicateObject = obj => {
 }
 
 const duplicateArray = arr => {
-    return arr.map(item => duplicate[typeOf(item)](item));
+    const retArr = [];
+    for (const key in arr) {
+        retArr[key] = arr[key];
+    }
+
+    return retArr;
 }
 
 const duplicateMapType = constructor => map => new constructor(map)
