@@ -27,7 +27,7 @@ const duplicateObject = obj => {
 const duplicateArray = arr => {
     const retArr = [];
     for (const key in arr) {
-        retArr[key] = arr[key];
+        retArr[key] = duplicate[typeOf(arr[key])](arr[key]);
     }
 
     return retArr;
