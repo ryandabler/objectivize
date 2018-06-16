@@ -52,6 +52,9 @@ const duplicateTypedArray = constructor => typedArr => {
 
 const duplicateArrayBuffer = arrBuff => new ArrayBuffer(arrBuff.length)
 
+const duplicateDataView = dv =>
+    new DataView(dv.buffer, dv.byteOffset, dv.byteLength)
+
 const duplicate = {
     [types.STRING]: identity,
     [types.NUMBER]: identity,
@@ -80,5 +83,6 @@ const duplicate = {
     [types.UINT32ARRAY]: duplicateTypedArray(Uint32Array),
     [types.FLOAT32ARRAY]: duplicateTypedArray(Float32Array),
     [types.FLOAT64ARRAY]: duplicateTypedArray(Float64Array),
-    [types.ARRAYBUFFER]: duplicateArrayBuffer
+    [types.ARRAYBUFFER]: duplicateArrayBuffer,
+    [types.DATAVIEW]: duplicateDataView
 }
