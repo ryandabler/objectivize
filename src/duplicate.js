@@ -39,6 +39,17 @@ const duplicateSetType = constructor => set => new constructor(set)
 
 const duplicatePromise = promise => promise.then()
 
+const duplicateTypedArray = constructor => typedArr => {
+    const newTypedArr = new constructor(typedArr.length);
+
+    for (const key in typedArr) {
+        newTypedArr[key] =
+            duplicate[typeOf(typedArr[key])](typedArr[key]);
+    }
+
+    return newTypedArr;
+}
+
 const duplicate = {
     [types.STRING]: identity,
     [types.NUMBER]: identity,
@@ -57,5 +68,14 @@ const duplicate = {
     [types.SET]: duplicateSetType(Set),
     [types.WEAKSET]: duplicateSetType(WeakSet),
     [types.MATH]: identity,
-    [types.PROMISE]: duplicatePromise
+    [types.PROMISE]: duplicatePromise,
+    [types.INT8ARRAY]: duplicateTypedArray(Int8Array),
+    [types.UINT8ARRAY]: duplicateTypedArray(Uint8Array),
+    [types.UINT8CLAMPEDARRAY]: duplicateTypedArray(Uint8ClampedArray),
+    [types.INT16ARRAY]: duplicateTypedArray(Int16Array),
+    [types.UINT16ARRAY]: duplicateTypedArray(Uint16Array),
+    [types.INT32ARRAY]: duplicateTypedArray(Int32Array),
+    [types.UINT32ARRAY]: duplicateTypedArray(Uint32Array),
+    [types.FLOAT32ARRAY]: duplicateTypedArray(Float32Array),
+    [types.FLOAT64ARRAY]: duplicateTypedArray(Float64Array)
 }
