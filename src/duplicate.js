@@ -88,5 +88,6 @@ const duplicate = {
     [types.JSON]: identity,
     [types.GENERATOR]: identity,
     [types.GENERATORFUNC]: duplicateFunction,
+    [types.WASM]: identity,
     [types.ASYNCFUNC]: duplicateFunction
 }
