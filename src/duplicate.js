@@ -86,6 +86,7 @@ const duplicate = {
     [types.ARRAYBUFFER]: duplicateArrayBuffer,
     [types.DATAVIEW]: duplicateDataView,
     [types.JSON]: identity,
+    [types.GENERATOR]: identity,
     [types.GENERATORFUNC]: duplicateFunction,
     [types.ASYNCFUNC]: duplicateFunction
 }
