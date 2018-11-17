@@ -33,7 +33,7 @@ const resolvePathAndGet = (obj, path) => {
 * @param {string} path Specified path to the value
 * @returns {Object}
 */
-const resolvePathAndSet = (val, path) => {
+const generateObjectFromPath = (val, path) => {
     const retObj = {};
     let pointer = retObj;
 
@@ -121,7 +121,7 @@ const copyObject = obj => {
     for (const path in paths) {
         retObj = mergeObjects(
             retObj,
-            resolvePathAndSet(resolvePathAndGet(obj, path), path)
+            generateObjectFromPath(resolvePathAndGet(obj, path), path)
         );
     }
 
@@ -149,7 +149,7 @@ const deepEquals = (obj1, obj2) => {
 
 module.exports = {
     resolvePathAndGet,
-    resolvePathAndSet,
+    generateObjectFromPath,
     mergeObjects,
     destructure,
     copyObject,
