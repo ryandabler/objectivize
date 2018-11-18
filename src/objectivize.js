@@ -27,6 +27,39 @@ const resolvePathAndGet = (obj, path) => {
 }
 
 /**
+* Set the value in a nested object given a path.
+* 
+* Iterates over an array containing the path to traverse in obj to find the value.
+* The value of each step in the path should be an object to allow continued traversal.
+* If at any point along the way, a segment of path can't be resolved, an object
+* from the remaining segments will be created and appended to the obj param.
+* 
+* @param {Object} obj Object to retrieve value from
+* @param {string} path Period-separated path to desired value
+* @param {*} val New value to set
+* @returns {Object}
+*/
+const resolvePathAndSet = (obj, path, val) => {
+    const segments = path.split(".");
+    let pointer = obj;
+    const validTypes = [ types.OBJECT, types.ARRAY ];
+
+    while (validTypes.includes(typeOf(pointer)) && segments.length > 1) {
+        const segment = segments.shift();
+
+        if (segment in pointer) pointer = pointer[segment];
+        else {
+            pointer[segment] = generateObjectFromPath(val, segments.join('.'));
+            return obj;
+        }
+    }
+    const segment = segments.shift();
+    pointer[segment] = val;
+    
+    return obj;
+}
+
+/**
 * Creates a nested object whose keys are the specified path, terminating at the value.
 * 
 * @param {*} val Value to be inserted into object
@@ -149,6 +182,7 @@ const deepEquals = (obj1, obj2) => {
 
 module.exports = {
     resolvePathAndGet,
+    resolvePathAndSet,
     generateObjectFromPath,
     mergeObjects,
     destructure,
