@@ -1,8 +1,8 @@
 {
   "name": "objectivize",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "An object-manipulation utility library",
-  "main": "lib/index.js",
+  "main": "lib/objectivize.js",
   "scripts": {
     "test": "mocha --exit",
     "compile": "cross-env NODE_ENV=production babel -d lib/ src/",
