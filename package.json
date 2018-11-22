@@ -4,7 +4,9 @@
   "description": "An object-manipulation utility library",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --exit"
+    "test": "mocha --exit",
+    "compile": "cross-env NODE_ENV=production babel -d lib/ src/",
+    "prepublish": "npm run compile"
   },
   "repository": {
     "type": "git",
