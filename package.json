@@ -17,10 +17,25 @@
   },
   "homepage": "https://github.com/ryandabler/objectivize#readme",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-minify": "^0.5.0",
     "chai": "^4.1.2",
     "mocha": "^5.2.0"
   },
   "dependencies": {
     "tupos": "^1.1.0"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ],
+    "env": {
+      "production": {
+        "presets": [
+          "minify"
+        ]
+      }
+    }
   }
 }
