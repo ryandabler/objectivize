@@ -2,7 +2,7 @@
   "name": "objectivize",
   "version": "1.0.0",
   "description": "An object-manipulation utility library",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "mocha --exit",
     "compile": "cross-env NODE_ENV=production babel -d lib/ src/",
@@ -35,6 +35,11 @@
       "env"
     ],
     "env": {
+      "test": {
+        "plugins": [
+          "istanbul"
+        ]
+      },
       "production": {
         "plugins": [
           "transform-object-rest-spread"
