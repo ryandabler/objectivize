@@ -1,6 +1,7 @@
 "use strict";
 
 const { types, typeOf } = require("tupos");
+const { isKeyed } = require('./utilities');
 
 /**
 * Retrieves the value from a nested object given a path.
@@ -131,7 +132,7 @@ const destructure = (obj, path = null) => {
     entries.forEach(entry => {
         const [ key, val ] = entry;
         const currentPath = path ? path + "." + key : key;
-        const subEntries =  [ types.OBJECT, types.ARRAY ].includes( typeOf(val) ) && Object.keys(val).length > 0
+        const subEntries =  isKeyed(val) && Object.keys(val).length > 0
             ? destructure(val, currentPath)
             : null;
         retObj = subEntries ? { ...retObj, ...subEntries } : { ...retObj, [currentPath]: val };
