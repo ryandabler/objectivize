@@ -118,22 +118,24 @@ var mergeObjects = (mainObj, subObj) => {
 * 
 * Takes an object of arbitrary nestedness recursively traverses each path to
 * generate a string representation of the path all the way down to the actual
-* value. This path then gets added to a new object as key, with the indicated
-* value as the value.
+* value. It will perform a check to make sure that the value should be recursed
+* by taking in the current value, key, and object (in that order). This path then
+* gets added to a new object as key, with the indicated value as the value.
 * 
 * @param {Object} obj Object to flatten
 * @param {string} [path=null] Path variable to track the recursive depth
+* @param {Function} [shouldTraverse=() => true] Function that checks whether a keyed object should be destructured
 * @returns {Object}
 */
-const destructure = (obj, path = null) => {
+const destructure = (obj, path = null, shouldTraverse = () => true) => {
     let retObj = {};
     const entries = Object.entries(obj);
 
     entries.forEach(entry => {
         const [ key, val ] = entry;
         const currentPath = path ? path + "." + key : key;
-        const subEntries =  isKeyed(val) && Object.keys(val).length > 0
-            ? destructure(val, currentPath)
+        const subEntries =  isKeyed(val) && Object.keys(val).length > 0 && shouldTraverse(val, key, obj)
+            ? destructure(val, currentPath, shouldTraverse)
             : null;
         retObj = subEntries ? { ...retObj, ...subEntries } : { ...retObj, [currentPath]: val };
     });
