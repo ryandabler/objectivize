@@ -1,5 +1,11 @@
 const { types, isOneOf } = require('tupos');
 
+/**
+* Checks if an item has a type specified in the list.
+* 
+* @param {*} - Item to type check against
+* @returns {boolean}
+*/
 const isKeyed = isOneOf(
     types.OBJECT,
     types.ARRAY,
