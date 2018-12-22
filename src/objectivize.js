@@ -116,7 +116,7 @@ var mergeObjects = (mainObj, subObj) => {
 /**
 * Traverses an object and flattens it.
 * 
-* Takes an object of arbitrary nestedness recursively traverses each path to
+* Takes an object of arbitrary nestedness and recursively traverses each path to
 * generate a string representation of the path all the way down to the actual
 * value. It will perform a check to make sure that the value should be recursed
 * by taking in the current value, key, and object (in that order). This path then
