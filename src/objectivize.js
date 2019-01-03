@@ -93,7 +93,7 @@ const generateObjectFromPath = (val, path) => {
 * @returns {Object}
 */
 //TODO: should deep copy mainObj rather than use spread syntax. Issue #3
-var mergeObjects = (mainObj, subObj) => {
+const mergeObjects = (mainObj, subObj) => {
     let retObj = { ...mainObj };
     for (const key in subObj) {
         if (key in retObj &&
