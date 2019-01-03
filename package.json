@@ -28,7 +28,7 @@
     "mocha": "^5.2.0"
   },
   "dependencies": {
-    "tupos": "^1.2.1"
+    "tupos": "^1.2.2"
   },
   "babel": {
     "presets": [
