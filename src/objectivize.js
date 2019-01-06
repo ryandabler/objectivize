@@ -1,7 +1,7 @@
 "use strict";
 
 const { types, typeOf } = require("tupos");
-const { isKeyed } = require('./utilities');
+const { isKeyed, areObjects } = require('./utilities');
 
 /**
 * Retrieves the value from a nested object given a path.
@@ -96,9 +96,7 @@ const generateObjectFromPath = (val, path) => {
 const mergeObjects = (mainObj, subObj) => {
     let retObj = { ...mainObj };
     for (const key in subObj) {
-        if (key in retObj &&
-            typeOf(retObj[key]) === types.OBJECT &&
-            typeOf(subObj[key]) === types.OBJECT
+        if (key in retObj && areObjects(retObj[key], subObj[key])
         ) {
             retObj[key] = mergeObjects(retObj[key], subObj[key]);
         } else if (key in retObj && typeOf(retObj[key]) === types.ARRAY) {

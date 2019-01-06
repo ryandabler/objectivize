@@ -1,4 +1,4 @@
-const { types, isOneOf } = require('tupos');
+const { types, isOneOf, are } = require('tupos');
 
 /**
 * Checks if an item has a type specified in the list.
@@ -20,4 +20,6 @@ const isKeyed = isOneOf(
     types.FLOAT64ARRAY
 );
 
-module.exports = { isKeyed };
+const areObjects = are(types.OBJECT);
+
+module.exports = { isKeyed, areObjects };
