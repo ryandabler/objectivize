@@ -5,16 +5,16 @@ const { copy } = require('dubl');
 const { isKeyed, areObjects } = require('./utilities');
 
 /**
-* Retrieves the value from a nested object given a path.
-* 
-* Iterates over an array containing the path to traverse in obj to find the value.
-* The value of each step in the path should be an object except for the final stage.
-* If any other step is not an object, should return null.
-* 
-* @param {Object} obj Object to retrieve value from
-* @param {string} path Period-separated path to desired value
-* @returns {*}
-*/
+ * Retrieves the value from a nested object given a path.
+ * 
+ * Iterates over an array containing the path to traverse in obj to find the value.
+ * The value of each step in the path should be an object except for the final stage.
+ * If any other step is not an object, should return null.
+ * 
+ * @param {Object} obj Object to retrieve value from
+ * @param {string} path Period-separated path to desired value
+ * @returns {*}
+ */
 const resolvePathAndGet = (obj, path) => {
     const segments = path.split(".");
     let pointer = obj;
@@ -29,18 +29,18 @@ const resolvePathAndGet = (obj, path) => {
 }
 
 /**
-* Set the value in a nested object given a path.
-* 
-* Iterates over an array containing the path to traverse in obj to find the value.
-* The value of each step in the path should be an object to allow continued traversal.
-* If at any point along the way, a segment of path can't be resolved, an object
-* from the remaining segments will be created and appended to the obj param.
-* 
-* @param {Object} obj Object to retrieve value from
-* @param {string} path Period-separated path to desired value
-* @param {*} val New value to set
-* @returns {Object}
-*/
+ * Set the value in a nested object given a path.
+ * 
+ * Iterates over an array containing the path to traverse in obj to find the value.
+ * The value of each step in the path should be an object to allow continued traversal.
+ * If at any point along the way, a segment of path can't be resolved, an object
+ * from the remaining segments will be created and appended to the obj param.
+ * 
+ * @param {Object} obj Object to retrieve value from
+ * @param {string} path Period-separated path to desired value
+ * @param {*} val New value to set
+ * @returns {Object}
+ */
 const resolvePathAndSet = (obj, path, val) => {
     const segments = path.split(".");
     let pointer = obj;
@@ -62,12 +62,12 @@ const resolvePathAndSet = (obj, path, val) => {
 }
 
 /**
-* Creates a nested object whose keys are the specified path, terminating at the value.
-* 
-* @param {*} val Value to be inserted into object
-* @param {string} path Specified path to the value
-* @returns {Object}
-*/
+ * Creates a nested object whose keys are the specified path, terminating at the value.
+ * 
+ * @param {*} val Value to be inserted into object
+ * @param {string} path Specified path to the value
+ * @returns {Object}
+ */
 const generateObjectFromPath = (val, path) => {
     const retObj = {};
     let pointer = retObj;
@@ -81,18 +81,18 @@ const generateObjectFromPath = (val, path) => {
 }
 
 /**
-* Merges an object of arbitrary depth into another object.
-* 
-* Traverses the keys in subObj, ensuring that each one is
-* in mainObj, and recursively merging the next layer of each object.
-* If both objects have the same path, the values will be merged into
-* an array. When a key is found in subObj that isn't in mainObj, the two 
-* can be safely merged and the merged object is returned.
-* 
-* @param {Object} mainObj Object to have other object merged into
-* @param {Object} subObj Object being merged
-* @returns {Object}
-*/
+ * Merges an object of arbitrary depth into another object.
+ * 
+ * Traverses the keys in subObj, ensuring that each one is
+ * in mainObj, and recursively merging the next layer of each object.
+ * If both objects have the same path, the values will be merged into
+ * an array. When a key is found in subObj that isn't in mainObj, the two 
+ * can be safely merged and the merged object is returned.
+ * 
+ * @param {Object} mainObj Object to have other object merged into
+ * @param {Object} subObj Object being merged
+ * @returns {Object}
+ */
 //TODO: should deep copy mainObj rather than use spread syntax. Issue #3
 //TODO: rename to merge when moving to v2
 const mergeObjects = (mainObj, subObj) => {
@@ -114,34 +114,34 @@ const mergeObjects = (mainObj, subObj) => {
 }
 
 /**
-* Merges a deep copies of two objects together.
-* 
-* Works identically to 'mergeObjects' except it makes deep copies
-* of the two objects that are to be merged together.
-* 
-* @param {Object} mainObj Object to have other object merged into
-* @param {Object} subObj Object being merged
-* @returns {Object}
-*/
+ * Merges a deep copies of two objects together.
+ * 
+ * Works identically to 'mergeObjects' except it makes deep copies
+ * of the two objects that are to be merged together.
+ * 
+ * @param {Object} mainObj Object to have other object merged into
+ * @param {Object} subObj Object being merged
+ * @returns {Object}
+ */
 const deepMerge = (mainObj, subObj) => mergeObjects(
     copy(mainObj),
     copy(subObj)
 );
 
 /**
-* Traverses an object and flattens it.
-* 
-* Takes an object of arbitrary nestedness and recursively traverses each path to
-* generate a string representation of the path all the way down to the actual
-* value. It will perform a check to make sure that the value should be recursed
-* by taking in the current value, key, and object (in that order). This path then
-* gets added to a new object as key, with the indicated value as the value.
-* 
-* @param {Object} obj Object to flatten
-* @param {string} [path=null] Path variable to track the recursive depth
-* @param {Function} [shouldTraverse=() => true] Function that checks whether a keyed object should be destructured
-* @returns {Object}
-*/
+ * Traverses an object and flattens it.
+ * 
+ * Takes an object of arbitrary nestedness and recursively traverses each path to
+ * generate a string representation of the path all the way down to the actual
+ * value. It will perform a check to make sure that the value should be recursed
+ * by taking in the current value, key, and object (in that order). This path then
+ * gets added to a new object as key, with the indicated value as the value.
+ * 
+ * @param {Object} obj Object to flatten
+ * @param {string} [path=null] Path variable to track the recursive depth
+ * @param {Function} [shouldTraverse=() => true] Function that checks whether a keyed object should be destructured
+ * @returns {Object}
+ */
 const destructure = (obj, path = null, shouldTraverse = () => true) => {
     let retObj = {};
     const entries = Object.entries(obj);
