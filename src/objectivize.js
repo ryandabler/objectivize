@@ -93,6 +93,7 @@ const generateObjectFromPath = (val, path) => {
 * @returns {Object}
 */
 //TODO: should deep copy mainObj rather than use spread syntax. Issue #3
+//TODO: rename to merge when moving to v2
 const mergeObjects = (mainObj, subObj) => {
     let retObj = { ...mainObj };
     for (const key in subObj) {
