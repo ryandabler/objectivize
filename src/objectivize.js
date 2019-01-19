@@ -1,6 +1,7 @@
 "use strict";
 
 const { types, typeOf } = require("tupos");
+const { copy } = require('dubl');
 const { isKeyed, areObjects } = require('./utilities');
 
 /**
@@ -113,6 +114,21 @@ const mergeObjects = (mainObj, subObj) => {
 }
 
 /**
+* Merges a deep copies of two objects together.
+* 
+* Works identically to 'mergeObjects' except it makes deep copies
+* of the two objects that are to be merged together.
+* 
+* @param {Object} mainObj Object to have other object merged into
+* @param {Object} subObj Object being merged
+* @returns {Object}
+*/
+const deepMerge = (mainObj, subObj) => mergeObjects(
+    copy(mainObj),
+    copy(subObj)
+);
+
+/**
 * Traverses an object and flattens it.
 * 
 * Takes an object of arbitrary nestedness and recursively traverses each path to
@@ -191,5 +207,6 @@ module.exports = {
     mergeObjects,
     destructure,
     copyObject,
-    deepEquals
+    deepEquals,
+    deepMerge
 };
