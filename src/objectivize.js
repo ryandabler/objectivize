@@ -200,6 +200,16 @@ const contains = (obj, maybeSubset) => {
     return subsetKeys.every( key => key in obj && contains(obj[key], maybeSubset[key]) ) || objKeys.some( key => contains(obj[key], maybeSubset) );
 }
 
+/**
+ * Checks if to object are deeply equal.
+ * 
+ * Utilizes `contains` to check that each object is contained in the other,
+ * which thereby guarantees equality.
+ * 
+ * @param {Object} obj1 Object to compare with other for equality
+ * @param {Object} obj2 Object to compare with other for equality
+ * @returns {boolean}
+ */
 const deepEquals = (obj1, obj2) => contains(obj1, obj2) && contains(obj2, obj1);
 
 module.exports = {
