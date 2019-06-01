@@ -82,7 +82,7 @@ const resolvePathAndUpdate = (obj, path, updateFn) => {
     const updatedItem = updateFn(updatable);
     resolvePathAndSet(obj, path, updatedItem);
     return obj;
- }
+}
 
 
 /**
