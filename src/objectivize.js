@@ -1,6 +1,6 @@
 'use strict';
 
-const { types, typeOf, areSameType, isPrimitive } = require('tupos');
+const { types, typeOf } = require('tupos');
 const { copy } = require('dubl');
 const { isKeyed, areObjects } = require('./utilities');
 
