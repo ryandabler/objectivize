@@ -4,6 +4,8 @@ const { types, typeOf } = require('tupos');
 const { copy } = require('dubl');
 const { isKeyed, areObjects } = require('./utilities');
 
+// TODO: path should become array and this should become a recursive function with a fallback
+// TODO: use more modern `tupos` functionality
 /**
  * Retrieves the value from a nested object given a path.
  * 
@@ -28,6 +30,7 @@ const resolvePathAndGet = (obj, path) => {
     return segments.length === 0 && pointer !== undefined ? pointer : null;
 }
 
+// TODO: Make more recursive and use more modern `tupos` functionality
 /**
  * Set the value in a nested object given a path.
  * 
@@ -181,6 +184,7 @@ const copyObject = obj => {
     return retObj;
 }
 
+// TODO: Maybe use `isPrimitive` instead of `!isKeyed`?
 /**
  * Checks if one object contains another.
  * 
