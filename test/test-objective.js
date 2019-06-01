@@ -6,6 +6,7 @@ const { types, is } = require('tupos');
 const {
     resolvePathAndGet,
     resolvePathAndSet,
+    resolvePathAndUpdate,
     generateObjectFromPath,
     mergeObjects,
     destructure,
@@ -82,6 +83,42 @@ describe('objectivize.js', function() {
 
             expect(Object.keys(resultPaths).length).to.equal(2);
             expect(resolvePathAndGet(result, path)).to.equal(setValue);
+        });
+    });
+
+    describe('resolvePathAndUpdate()', function() {
+        it('Should update an updated object', function() {
+            const updateFn = arr => arr.concat(4);
+            const obj = {
+                a: {
+                    b: {
+                        c: [ 1, 2, 3 ]
+                    }
+                }
+            };
+            const path = 'a.b.c';
+            const result = resolvePathAndUpdate(obj, path, updateFn);
+            const objectPaths = destructure(result);
+
+            expect(Object.keys(objectPaths).length).to.equal(4);
+            expect(deepEquals(result.a.b.c, [ 1, 2, 3, 4 ])).to.be.true;
+        });
+
+        it('Should return an object unchanged if path is non-existent', function() {
+            const updateFn = num => num + 1;
+            const obj = {
+                a: {
+                    b: {
+                        c: 1
+                    }
+                }
+            };
+            const path = 'a.b.d.e';
+            const result = resolvePathAndUpdate(copyObject(obj), path, updateFn);
+            const resultPaths = destructure(result);
+
+            expect(Object.keys(resultPaths).length).to.equal(1);
+            expect(deepEquals(obj, result)).to.be.true;
         });
     });
 

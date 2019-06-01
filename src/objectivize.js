@@ -65,6 +65,27 @@ const resolvePathAndSet = (obj, path, val) => {
 }
 
 /**
+ * Update a deeply nested portion of an object.
+ * 
+ * Will extract the portion of an object to be updated. If none exists,
+ * it will return the object unchanged. Otherwise it will update that
+ * portion and return the object.
+ * 
+ * @param {Object} obj Object to update some portion of sub-tree
+ * @param {string} path Path leading to part to update
+ * @param {Function} updateFn Updates the value
+ */
+const resolvePathAndUpdate = (obj, path, updateFn) => {
+    const updatable = resolvePathAndGet(obj, path);
+    if (!updatable) return obj;
+ 
+    const updatedItem = updateFn(updatable);
+    resolvePathAndSet(obj, path, updatedItem);
+    return obj;
+ }
+
+
+/**
  * Creates a nested object whose keys are the specified path, terminating at the value.
  * 
  * @param {*} val Value to be inserted into object
@@ -219,6 +240,7 @@ const deepEquals = (obj1, obj2) => contains(obj1, obj2) && contains(obj2, obj1);
 module.exports = {
     resolvePathAndGet,
     resolvePathAndSet,
+    resolvePathAndUpdate,
     generateObjectFromPath,
     mergeObjects,
     destructure,
