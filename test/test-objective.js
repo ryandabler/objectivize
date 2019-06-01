@@ -77,4 +77,16 @@ describe('objectivize.js', function() {
             expect(result.a.b.d).to.equal(setValue);
         });
     });
+
+    describe('generateObjectFromPath()', function() {
+        it('Should generate an object with a specified path terminating with a value', function() {
+            const path = 'a.b.c';
+            const value = 'test value';
+            const result = generateObjectFromPath(value, path);
+            const resultPaths = destructure(result);
+
+            expect(Object.keys(resultPaths).length).to.equal(1);
+            expect(resolvePathAndGet(result, path)).to.equal(value);
+        });
+    });
 });
