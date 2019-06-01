@@ -5,7 +5,13 @@ const chai  = require('chai');
 const {
     resolvePathAndGet,
     resolvePathAndSet,
-    destructure
+    generateObjectFromPath,
+    mergeObjects,
+    destructure,
+    copyObject,
+    contains,
+    deepEquals,
+    deepMerge
 } = require('../src/objectivize');
 
 const expect = chai.expect;
@@ -87,6 +93,36 @@ describe('objectivize.js', function() {
 
             expect(Object.keys(resultPaths).length).to.equal(1);
             expect(resolvePathAndGet(result, path)).to.equal(value);
+        });
+    });
+
+    describe('mergeObjects()', function() {
+        it('Should ... ', function() {
+            
+        });
+    });
+
+    describe('copyObject()', function() {
+        it('Should ... ', function() {
+            
+        });
+    });
+
+    describe('contains()', function() {
+        it('Should ... ', function() {
+            
+        });
+    });
+
+    describe('deepEquals()', function() {
+        it('Should ... ', function() {
+            
+        });
+    });
+
+    describe('deepMerge()', function() {
+        it('Should ... ', function() {
+            
         });
     });
 });
