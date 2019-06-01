@@ -71,9 +71,9 @@ describe('objectivize.js', function() {
             const path = 'a.b.d';
             const setValue = 2;
             const result = resolvePathAndSet(obj, path, setValue);
-            const objectPaths = destructure(result);
+            const resultPaths = destructure(result);
 
-            expect(Object.keys(objectPaths).length).to.equal(2);
+            expect(Object.keys(resultPaths).length).to.equal(2);
             expect(result.a.b.d).to.equal(setValue);
         });
     });
