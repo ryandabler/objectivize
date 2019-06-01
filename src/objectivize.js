@@ -1,6 +1,6 @@
 'use strict';
 
-const { types, typeOf } = require('tupos');
+const { types, typeOf, areSameType, isPrimitive } = require('tupos');
 const { copy } = require('dubl');
 const { isKeyed, areObjects } = require('./utilities');
 
@@ -182,19 +182,18 @@ const copyObject = obj => {
 }
 
 const deepEquals = (obj1, obj2) => {
-    let equals = typeOf(obj1) === typeOf(obj2) && (["[object Number]"].includes(typeOf(obj1)) ? obj1 === obj2 : true);
-    if (!equals) return false;
+    if ( areSameType(obj1, obj2) && isPrimitive(obj1) ) return obj1 === obj2;
 
+    let isEqual = true;
     for (const key in obj1) {
-        if ( !(key in obj2) ) return false;
-        equals = equals && typeOf(obj1[key]) === typeOf(obj2[key]) && deepEquals(obj1[key], obj2[key]);
-        if (!equals) return false;
+        // if ( !(key in obj2) ) return false; //maybe don't need this?
+        return areSameType(obj1[key], obj2[key]) && deepEquals(obj1[key], obj2[key]);
     }
     
     for (const key in obj2) {
         if ( !(key in obj1) ) return false;
-        equals = equals && typeOf(obj2[key]) === typeOf(obj1[key]) && deepEquals(obj2[key], obj1[key]);
-        if (!equals) return false;
+        isEqual = isEqual && typeOf(obj2[key]) === typeOf(obj1[key]) && deepEquals(obj2[key], obj1[key]);
+        if (!isEqual) return false;
     }
     
     return true;
