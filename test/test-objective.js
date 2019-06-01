@@ -74,13 +74,13 @@ describe('objectivize.js', function() {
                     }
                 }
             };
-            const path = 'a.b.d';
+            const path = 'a.b.d.e';
             const setValue = 2;
             const result = resolvePathAndSet(obj, path, setValue);
             const resultPaths = destructure(result);
 
             expect(Object.keys(resultPaths).length).to.equal(2);
-            expect(result.a.b.d).to.equal(setValue);
+            expect(resolvePathAndGet(result, path)).to.equal(setValue);
         });
     });
 
@@ -97,6 +97,71 @@ describe('objectivize.js', function() {
     });
 
     describe('mergeObjects()', function() {
+        it('Should merge in shape as-is if no collisions ', function() {
+            const mainObj = {
+                a: 1,
+                b: 2,
+                e: {
+                    f: 1
+                }
+            };
+
+            const subObject = {
+                c: 3,
+                d: {
+                    e: 'abc'
+                },
+                e: {
+                    g: 2
+                }
+            };
+
+            const result = mergeObjects(mainObj, subObject);
+            const resultPaths = destructure(result);
+
+            expect(contains(result, subObject)).to.be.true;
+            expect(Object.keys(resultPaths).length).to.equal(6);
+        });
+
+        it('Should combine keys into an array when colliding', function() {
+            const mainObj = {
+                a: 1,
+                b: 2
+            };
+
+            const subObject = {
+                b: 3
+            };
+
+            const finalObject = {
+                a: 1,
+                b: [ 2, 3 ]
+            };
+
+            const result = mergeObjects(mainObj, subObject);
+
+            expect(contains(result, finalObject)).to.be.true;
+        });
+
+        it('Should concat merged property if main property is an array', function() {
+            const mainObj = {
+                a: 1,
+                b: [ 2, 4 ]
+            };
+
+            const subObject = {
+                b: 3
+            };
+
+            const result = mergeObjects(mainObj, subObject);
+            const resultPaths = destructure(result);
+
+            expect(Object.keys(resultPaths).length).to.equal(4);
+            expect(resolvePathAndGet(result, 'b.2')).to.equal(subObject.b);
+        });
+    });
+
+    describe('destructure()', function() {
         it('Should ... ', function() {
             
         });
