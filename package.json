@@ -1,6 +1,6 @@
 {
   "name": "objectivize",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "An object-manipulation utility library",
   "main": "lib/objectivize.js",
   "scripts": {
