@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-const { types, typeOf } = require("tupos");
+const { types, typeOf } = require('tupos');
 const { copy } = require('dubl');
 const { isKeyed, areObjects } = require('./utilities');
 
@@ -16,7 +16,7 @@ const { isKeyed, areObjects } = require('./utilities');
  * @returns {*}
  */
 const resolvePathAndGet = (obj, path) => {
-    const segments = path.split(".");
+    const segments = path.split('.');
     let pointer = obj;
     const validTypes = [ types.OBJECT, types.ARRAY ];
 
@@ -42,7 +42,7 @@ const resolvePathAndGet = (obj, path) => {
  * @returns {Object}
  */
 const resolvePathAndSet = (obj, path, val) => {
-    const segments = path.split(".");
+    const segments = path.split('.');
     let pointer = obj;
     const validTypes = [ types.OBJECT, types.ARRAY ];
 
@@ -72,7 +72,7 @@ const generateObjectFromPath = (val, path) => {
     const retObj = {};
     let pointer = retObj;
 
-    path.split(".").forEach((_path, idx, arr) => {
+    path.split('.').forEach((_path, idx, arr) => {
         pointer[_path] = idx === arr.length - 1 ? val : {};
         pointer = pointer[_path];
     });
@@ -148,7 +148,7 @@ const destructure = (obj, path = null, shouldTraverse = () => true) => {
 
     entries.forEach(entry => {
         const [ key, val ] = entry;
-        const currentPath = path ? path + "." + key : key;
+        const currentPath = path ? path + '.' + key : key;
         const subEntries =  isKeyed(val) && Object.keys(val).length > 0 && shouldTraverse(val, key, obj)
             ? destructure(val, currentPath, shouldTraverse)
             : null;

@@ -1,7 +1,7 @@
 ////////////////////////////
 // Initialize
 ////////////////////////////
-const chai  = require("chai");
+const chai  = require('chai');
 const {
     resolvePathAndGet,
     resolvePathAndSet,
@@ -13,9 +13,9 @@ const expect = chai.expect;
 ////////////////////////////
 // Test
 ////////////////////////////
-describe("objectivize.js", function() {
-    describe("resolvePathAndGet()", function() {
-        it("Should get property in object", function() {
+describe('objectivize.js', function() {
+    describe('resolvePathAndGet()', function() {
+        it('Should get property in object', function() {
             const obj = {
                 a: {
                     b: {
@@ -28,7 +28,7 @@ describe("objectivize.js", function() {
             expect(result).to.equal(obj.a.b.c[1]);
         });
 
-        it("Should return null for non-existent path", function() {
+        it('Should return null for non-existent path', function() {
             const obj = {
                 a: {
                     b: {
@@ -42,8 +42,8 @@ describe("objectivize.js", function() {
         });
     });
 
-    describe("resolvePathAndSet()", function() {
-        it("Should set a value in an existent path", function() {
+    describe('resolvePathAndSet()', function() {
+        it('Should set a value in an existent path', function() {
             const obj = {
                 a: {
                     b: {
@@ -60,7 +60,7 @@ describe("objectivize.js", function() {
             expect(result.a.b.c).to.equal(setValue);
         });
 
-        it("Should create non-existent paths during traversal", function() {
+        it('Should create non-existent paths during traversal', function() {
             const obj = {
                 a: {
                     b: {
