@@ -181,6 +181,25 @@ const copyObject = obj => {
     return retObj;
 }
 
+/**
+ * Checks if one object contains another.
+ * 
+ * Recursively traverses the structure of a given object to check if any
+ * sub-structure in that object is identical in shape to another
+ * 
+ * @param {Object} obj Object to check for containment of another object
+ * @param {Object} maybeSubset Object to check whether it is contained in given object
+ * @returns {boolean}
+ */
+const contains = (obj, maybeSubset) => {
+    if (!isKeyed(obj) || !isKeyed(maybeSubset)) return obj === maybeSubset;
+    
+    const objKeys = Object.keys(obj);
+    const subsetKeys = Object.keys(maybeSubset);
+    
+    return subsetKeys.every( key => key in obj && contains(obj[key], maybeSubset[key]) ) || objKeys.some( key => contains(obj[key], maybeSubset) );
+}
+
 const deepEquals = (obj1, obj2) => {
     if ( areSameType(obj1, obj2) && isPrimitive(obj1) ) return obj1 === obj2;
 
