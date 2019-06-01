@@ -2,6 +2,7 @@
 // Initialize
 ////////////////////////////
 const chai  = require('chai');
+const { types, is } = require('tupos');
 const {
     resolvePathAndGet,
     resolvePathAndSet,
@@ -159,35 +160,198 @@ describe('objectivize.js', function() {
             expect(Object.keys(resultPaths).length).to.equal(4);
             expect(resolvePathAndGet(result, 'b.2')).to.equal(subObject.b);
         });
+
+        it('Should shallow merge objects', function() {
+            const objectRef = {
+                a: 1
+            };
+
+            const mainObj = {
+                b: {
+                    d: 1
+                }
+            };
+
+            const subObj = {
+                b: {
+                    c: objectRef
+                }
+            }
+
+            const result = mergeObjects(mainObj, subObj);
+            expect(result.b.c).to.equal(objectRef);
+        });
     });
 
     describe('destructure()', function() {
-        it('Should ... ', function() {
+        it('Should decompose an object into its component paths', function() {
+            const paths = [
+                [ 'a.b.c', 'path 1' ],
+                [ 'a.b.d', true ],
+                [ 'a.c.e.f.0', {} ]
+            ];
+            const object = paths.reduce(
+                (obj, [ path, val ]) => resolvePathAndSet(obj, path, val),
+                {}
+            );
             
+            const result = destructure(object);
+            const resultPaths = Object.entries(result);
+            expect(resultPaths.length).to.equal(paths.length);
+            resultPaths.forEach(
+                ([ path, val ]) => {
+                    const [ originalPath, originalVal ] = paths.find( ([ _path ]) => _path === path);
+                    expect(path).to.equal(originalPath);
+                    expect(val).to.equal(originalVal);
+                }
+            )
+        });
+
+        it('Should account for a custom traversal', function() {
+            const isArray = is(types.ARRAY);
+            const shouldTraverse = val => !isArray(val);
+            const paths = [
+                [ 'a.b.c', [ 'path 1', 'path 2', 'path 3' ] ],
+                [ 'a.b.d', true ],
+                [ 'a.c.e.f.0', {} ]
+            ];
+            const object = paths.reduce(
+                (obj, [ path, val ]) => resolvePathAndSet(obj, path, val),
+                {}
+            );
+            
+            const result = destructure(object, null, shouldTraverse);
+            const resultPaths = Object.entries(result);
+            expect(resultPaths.length).to.equal(paths.length);
+            resultPaths.forEach(
+                ([ path, val ]) => {
+                    const [ originalPath, originalVal ] = paths.find( ([ _path ]) => _path === path);
+                    expect(path).to.equal(originalPath);
+                    expect(val).to.equal(originalVal);
+                }
+            )
         });
     });
 
     describe('copyObject()', function() {
-        it('Should ... ', function() {
-            
+        it('Should return empty object if given empty object', function() {
+            const obj = {};
+            const result = copyObject(obj);
+
+            expect(deepEquals(result, obj)).to.be.true;
+        });
+
+        it('Should copy an object', function() {
+            const obj = {
+                a: 1,
+                b: true,
+                c: {
+                    d: 'tell me a tale',
+                    e: { f: { g: null } }
+                }
+            };
+            const result = copyObject(obj);
+
+            expect(deepEquals(result, obj)).to.be.true;
         });
     });
 
     describe('contains()', function() {
-        it('Should ... ', function() {
-            
+        it('Should return true', function() {
+            const objects = [
+                [
+                    { a: 1, b: { c: 2, d: 3 } },
+                    { a: 1, b: { d: 3 } }
+                ],
+                [
+                    { a: 1, b: { a: 1, b: { c: 2, d: 3 } } },
+                    { a: 1, b: { c: 2 } }
+                ]
+            ];
+            const results = objects.map(
+                ( [ obj, subObj ]) => contains(obj, subObj)
+            );
+
+            expect(results.every(result => result)).to.be.true;
+        });
+
+        it('Should return false', function() {
+            const objects = [
+                [
+                    { a: 1, b: { c: 2, d: 3 } },
+                    { a: 1, b: { d: 4 } }
+                ],
+                [
+                    { a: 1, b: { a: 1, b: { c: 2, d: 3 } } },
+                    { a: 1, b: { c: { d: 3 } } }
+                ]
+            ];
+            const results = objects.map(
+                ( [ obj, subObj ]) => contains(obj, subObj)
+            );
+
+            expect(results.some(result => result)).to.be.false;
         });
     });
 
     describe('deepEquals()', function() {
-        it('Should ... ', function() {
-            
+        it('Should return true', function() {
+            const objects = [
+                [
+                    { a: 1, b: { c: 2, d: 3 } },
+                    { a: 1, b: { c: 2, d: 3 } }
+                ],
+                [
+                    { a: 1, b: { a: 1, b: { c: 2, d: 3 } } },
+                    { a: 1, b: { a: 1, b: { c: 2, d: 3 } } }
+                ]
+            ];
+            const results = objects.map(
+                ( [ obj, subObj ]) => deepEquals(obj, subObj)
+            );
+
+            expect(results.every(result => result)).to.be.true;
+        });
+
+        it('Should return false', function() {
+            const objects = [
+                [
+                    { a: 1, b: { c: 2, d: 3 } },
+                    { a: 1, b: { d: 4 } }
+                ],
+                [
+                    { a: 1, b: { a: 1, b: { c: 2, d: 3 } } },
+                    { a: 1, b: { a: 1, b: { c: 2, d: 4 } } }
+                ]
+            ];
+            const results = objects.map(
+                ( [ obj, subObj ]) => deepEquals(obj, subObj)
+            );
+
+            expect(results.some(result => result)).to.be.false;
         });
     });
 
     describe('deepMerge()', function() {
-        it('Should ... ', function() {
-            
+        it('Should create a deep copy before merging', function() {
+            const objectRef = {
+                a: 1
+            };
+
+            const mainObj = {
+                b: {
+                    d: 1
+                }
+            };
+
+            const subObj = {
+                b: {
+                    c: objectRef
+                }
+            }
+
+            const result = deepMerge(mainObj, subObj);
+            expect(result.b.c).to.not.equal(objectRef);
         });
     });
 });
