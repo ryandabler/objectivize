@@ -200,23 +200,7 @@ const contains = (obj, maybeSubset) => {
     return subsetKeys.every( key => key in obj && contains(obj[key], maybeSubset[key]) ) || objKeys.some( key => contains(obj[key], maybeSubset) );
 }
 
-const deepEquals = (obj1, obj2) => {
-    if ( areSameType(obj1, obj2) && isPrimitive(obj1) ) return obj1 === obj2;
-
-    let isEqual = true;
-    for (const key in obj1) {
-        // if ( !(key in obj2) ) return false; //maybe don't need this?
-        return areSameType(obj1[key], obj2[key]) && deepEquals(obj1[key], obj2[key]);
-    }
-    
-    for (const key in obj2) {
-        if ( !(key in obj1) ) return false;
-        isEqual = isEqual && typeOf(obj2[key]) === typeOf(obj1[key]) && deepEquals(obj2[key], obj1[key]);
-        if (!isEqual) return false;
-    }
-    
-    return true;
-}
+const deepEquals = (obj1, obj2) => contains(obj1, obj2) && contains(obj2, obj1);
 
 module.exports = {
     resolvePathAndGet,
