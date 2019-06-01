@@ -6,6 +6,7 @@
   "scripts": {
     "test": "mocha --exit",
     "compile": "cross-env NODE_ENV=production babel -d lib/ src/",
+    "coverage": "cross-env NODE_ENV=test nyc mocha",
     "prepublish": "npm run compile"
   },
   "repository": {
@@ -19,13 +20,18 @@
   },
   "homepage": "https://github.com/ryandabler/objectivize#readme",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/register": "^7.4.4",
+    "babel-plugin-istanbul": "^5.1.4",
     "babel-preset-minify": "^0.5.0",
     "chai": "^4.1.2",
+    "coveralls": "^3.0.3",
     "cross-env": "^5.2.0",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "nyc": "^14.1.1"
   },
   "dependencies": {
     "dubl": "^1.1.0",
@@ -33,7 +39,14 @@
   },
   "babel": {
     "presets": [
-      "env"
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
     ],
     "env": {
       "test": {
@@ -43,12 +56,29 @@
       },
       "production": {
         "plugins": [
-          "transform-object-rest-spread"
+          "@babel/plugin-proposal-object-rest-spread"
         ],
         "presets": [
           "minify"
         ]
       }
     }
+  },
+  "nyc": {
+    "check-coverage": true,
+    "per-file": true,
+    "lines": 100,
+    "statements": 100,
+    "functions": 100,
+    "branches": 100,
+    "require": [
+      "@babel/register"
+    ],
+    "sourceMap": false,
+    "instrument": false,
+    "reporter": [
+      "text",
+      "lcov"
+    ]
   }
 }

@@ -1,5 +1,8 @@
-test
-src
+.nyc_output
+coverage
 node_modules
+src
+test
 .eslintrc.json
 .gitignore
+.travis.yml
