@@ -225,6 +225,7 @@ module.exports = {
     mergeObjects,
     destructure,
     copyObject,
+    contains,
     deepEquals,
     deepMerge
 };
