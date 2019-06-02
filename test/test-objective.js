@@ -3,6 +3,7 @@
 ////////////////////////////
 const chai  = require('chai');
 const { types, is } = require('tupos');
+const { copy } = require('dubl');
 const {
     resolvePathAndGet,
     resolvePathAndSet,
@@ -10,7 +11,6 @@ const {
     generateObjectFromPath,
     mergeObjects,
     destructure,
-    copyObject,
     contains,
     deepEquals,
     deepMerge
@@ -114,7 +114,7 @@ describe('objectivize.js', function() {
                 }
             };
             const path = 'a.b.d.e';
-            const result = resolvePathAndUpdate(copyObject(obj), path, updateFn);
+            const result = resolvePathAndUpdate(copy(obj), path, updateFn);
             const resultPaths = destructure(result);
 
             expect(Object.keys(resultPaths).length).to.equal(1);
@@ -267,29 +267,6 @@ describe('objectivize.js', function() {
                     expect(val).to.equal(originalVal);
                 }
             )
-        });
-    });
-
-    describe('copyObject()', function() {
-        it('Should return empty object if given empty object', function() {
-            const obj = {};
-            const result = copyObject(obj);
-
-            expect(deepEquals(result, obj)).to.be.true;
-        });
-
-        it('Should copy an object', function() {
-            const obj = {
-                a: 1,
-                b: true,
-                c: {
-                    d: 'tell me a tale',
-                    e: { f: { g: null } }
-                }
-            };
-            const result = copyObject(obj);
-
-            expect(deepEquals(result, obj)).to.be.true;
         });
     });
 

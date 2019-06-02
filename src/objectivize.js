@@ -181,29 +181,6 @@ const destructure = (obj, path = null, shouldTraverse = () => true) => {
     return retObj;
 }
 
-/**
- * Takes an object and returns a copy of it
- * 
- * Destructures the object into its component paths, and creates a new object from
- * that path with the final value being the original value. Merges this new object
- * into the object that will finally be returned to the user.
- * 
- * @param {Object} obj Object to be copied
- */
-// TODO: Make this a deep copy. Issue #1
-const copyObject = obj => {
-    const paths = destructure(obj);
-    let retObj = {};
-    for (const path in paths) {
-        retObj = mergeObjects(
-            retObj,
-            generateObjectFromPath(resolvePathAndGet(obj, path), path)
-        );
-    }
-
-    return retObj;
-}
-
 // TODO: Maybe use `isPrimitive` instead of `!isKeyed`?
 /**
  * Checks if one object contains another.
@@ -243,7 +220,6 @@ module.exports = {
     generateObjectFromPath,
     mergeObjects,
     destructure,
-    copyObject,
     contains,
     deepEquals,
     deepMerge
