@@ -4,8 +4,6 @@ const { types, typeOf } = require('tupos');
 const { copy } = require('dubl');
 const { isKeyed, areObjects, isValidPath, _get } = require('./utilities');
 
-// TODO: path should become array and this should become a recursive function with a fallback
-// TODO: use more modern `tupos` functionality
 /**
  * Retrieves the value from a nested object given a path.
  * 
