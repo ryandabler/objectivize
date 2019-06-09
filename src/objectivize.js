@@ -9,7 +9,7 @@ const { isKeyed, areObjects, isValidPath, _get } = require('./utilities');
  * 
  * Iterates over an array containing the path to traverse in obj to find the value.
  * The value of each step in the path should be an object except for the final stage.
- * If any other step is not an object, should return null.
+ * If any other step is not an object, should return undefined.
  * 
  * @param {Object} obj Object to retrieve value from
  * @param {Array<string | number | symbol> | string} path Path to desired value
