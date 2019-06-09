@@ -17,7 +17,7 @@ const { isKeyed, areObjects } = require('./utilities');
  * @param {string} path Period-separated path to desired value
  * @returns {*}
  */
-const resolvePathAndGet = (obj, path) => {
+const get = (obj, path) => {
     const segments = path.split('.');
     let pointer = obj;
     const validTypes = [ types.OBJECT, types.ARRAY ];
@@ -44,7 +44,7 @@ const resolvePathAndGet = (obj, path) => {
  * @param {*} val New value to set
  * @returns {Object}
  */
-const resolvePathAndSet = (obj, path, val) => {
+const set = (obj, path, val) => {
     const segments = path.split('.');
     let pointer = obj;
     const validTypes = [ types.OBJECT, types.ARRAY ];
@@ -75,12 +75,12 @@ const resolvePathAndSet = (obj, path, val) => {
  * @param {string} path Path leading to part to update
  * @param {Function} updateFn Updates the value
  */
-const resolvePathAndUpdate = (obj, path, updateFn) => {
-    const updatable = resolvePathAndGet(obj, path);
+const update = (obj, path, updateFn) => {
+    const updatable = get(obj, path);
     if (!updatable) return obj;
  
     const updatedItem = updateFn(updatable);
-    resolvePathAndSet(obj, path, updatedItem);
+    set(obj, path, updatedItem);
     return obj;
 }
 
@@ -117,13 +117,12 @@ const generateObjectFromPath = (val, path) => {
  * @param {Object} subObj Object being merged
  * @returns {Object}
  */
-//TODO: rename to merge when moving to v2
-const mergeObjects = (mainObj, subObj) => {
+const merge = (mainObj, subObj) => {
     let retObj = { ...mainObj };
     for (const key in subObj) {
         if (key in retObj && areObjects(retObj[key], subObj[key])
         ) {
-            retObj[key] = mergeObjects(retObj[key], subObj[key]);
+            retObj[key] = merge(retObj[key], subObj[key]);
         } else if (key in retObj && typeOf(retObj[key]) === types.ARRAY) {
             retObj[key] = retObj[key].concat(subObj[key]);
         } else if (key in retObj) {
@@ -139,14 +138,14 @@ const mergeObjects = (mainObj, subObj) => {
 /**
  * Merges a deep copies of two objects together.
  * 
- * Works identically to 'mergeObjects' except it makes deep copies
+ * Works identically to 'merge' except it makes deep copies
  * of the two objects that are to be merged together.
  * 
  * @param {Object} mainObj Object to have other object merged into
  * @param {Object} subObj Object being merged
  * @returns {Object}
  */
-const deepMerge = (mainObj, subObj) => mergeObjects(
+const deepMerge = (mainObj, subObj) => merge(
     copy(mainObj),
     copy(subObj)
 );
@@ -211,16 +210,16 @@ const contains = (obj, maybeSubset) => {
  * @param {Object} obj2 Object to compare with other for equality
  * @returns {boolean}
  */
-const deepEquals = (obj1, obj2) => contains(obj1, obj2) && contains(obj2, obj1);
+const equals = (obj1, obj2) => contains(obj1, obj2) && contains(obj2, obj1);
 
 module.exports = {
-    resolvePathAndGet,
-    resolvePathAndSet,
-    resolvePathAndUpdate,
+    get,
+    set,
+    update,
     generateObjectFromPath,
-    mergeObjects,
+    merge,
     destructure,
     contains,
-    deepEquals,
+    equals,
     deepMerge
 };
