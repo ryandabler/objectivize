@@ -22,7 +22,6 @@ const get = (obj, path) => {
     return _get(obj, path);
 }
 
-// TODO: Make more recursive and use more modern `tupos` functionality
 /**
  * Set the value in a nested object given a path.
  * 
