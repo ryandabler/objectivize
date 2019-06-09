@@ -2,7 +2,7 @@
 
 const { types, typeOf } = require('tupos');
 const { copy } = require('dubl');
-const { isKeyed, areObjects, isValidPath, _get } = require('./utilities');
+const { isKeyed, areObjects, isValidPath, _get, _set } = require('./utilities');
 
 /**
  * Retrieves the value from a nested object given a path.
@@ -34,26 +34,13 @@ const get = (obj, path) => {
  * @param {Object} obj Object to retrieve value from
  * @param {string} path Period-separated path to desired value
  * @param {*} val New value to set
- * @returns {Object}
+ * @returns {boolean}
  */
 const set = (obj, path, val) => {
-    const segments = path.split('.');
-    let pointer = obj;
-    const validTypes = [ types.OBJECT, types.ARRAY ];
+    if (!obj || !isValidPath(path)) return false;
+    if (typeOf(path) === types.STRING) path = path.split('.');
 
-    while (validTypes.includes(typeOf(pointer)) && segments.length > 1) {
-        const segment = segments.shift();
-
-        if (segment in pointer) pointer = pointer[segment];
-        else {
-            pointer[segment] = generateObjectFromPath(val, segments.join('.'));
-            return obj;
-        }
-    }
-    const segment = segments.shift();
-    pointer[segment] = val;
-    
-    return obj;
+    return _set(obj, path, val);
 }
 
 /**

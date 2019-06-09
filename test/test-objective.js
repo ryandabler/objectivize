@@ -62,10 +62,11 @@ describe('objectivize.js', function() {
             const path = 'a.b.c';
             const setValue = 1;
             const result = set(obj, path, setValue);
-            const objectPaths = destructure(result);
+            const objectPaths = destructure(obj);
 
+            expect(result).to.be.true;
             expect(Object.keys(objectPaths).length).to.equal(1);
-            expect(result.a.b.c).to.equal(setValue);
+            expect(obj.a.b.c).to.equal(setValue);
         });
 
         it('Should create non-existent paths during traversal', function() {
@@ -79,10 +80,11 @@ describe('objectivize.js', function() {
             const path = 'a.b.d.e';
             const setValue = 2;
             const result = set(obj, path, setValue);
-            const resultPaths = destructure(result);
+            const resultPaths = destructure(obj);
 
+            expect(result).to.be.true;
             expect(Object.keys(resultPaths).length).to.equal(2);
-            expect(get(result, path)).to.equal(setValue);
+            expect(get(obj, path)).to.equal(setValue);
         });
     });
 
@@ -228,7 +230,10 @@ describe('objectivize.js', function() {
                 [ 'a.c.e.f.0', {} ]
             ];
             const object = paths.reduce(
-                (obj, [ path, val ]) => set(obj, path, val),
+                (obj, [ path, val ]) => {
+                    set(obj, path, val);
+                    return obj;
+                },
                 {}
             );
             
@@ -253,7 +258,10 @@ describe('objectivize.js', function() {
                 [ 'a.c.e.f.0', {} ]
             ];
             const object = paths.reduce(
-                (obj, [ path, val ]) => set(obj, path, val),
+                (obj, [ path, val ]) => {
+                    set(obj, path, val);
+                    return obj;
+                },
                 {}
             );
             
