@@ -36,7 +36,7 @@ describe('objectivize.js', function() {
             expect(result).to.equal(obj.a.b.c[1]);
         });
 
-        it('Should return null for non-existent path', function() {
+        it('Should return undefined for non-existent path', function() {
             const obj = {
                 a: {
                     b: {
@@ -46,7 +46,7 @@ describe('objectivize.js', function() {
             };
             const path = 'a.b.d';
             const result = get(obj, path);
-            expect(result).to.equal(null);
+            expect(result).to.equal(undefined);
         });
     });
 
