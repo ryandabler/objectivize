@@ -76,7 +76,6 @@ const update = (obj, path, updateFn) => {
     return obj;
 }
 
-
 /**
  * Creates a nested object whose keys are the specified path, terminating at the value.
  * 
