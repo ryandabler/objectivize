@@ -21,5 +21,13 @@ const isKeyed = isOneOf(
 );
 
 const areObjects = are(types.OBJECT);
+const isValidPath = isOneOf(types.ARRAY, types.STRING);
 
-module.exports = { isKeyed, areObjects };
+const _get = (obj, path) => {
+    if (path.length === 0) return obj;
+    if (!isKeyed(obj)) return undefined;
+
+    return _get(obj[path[0]], path.slice(1));
+};
+
+module.exports = { isKeyed, areObjects, isValidPath, _get };

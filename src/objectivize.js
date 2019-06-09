@@ -2,7 +2,7 @@
 
 const { types, typeOf } = require('tupos');
 const { copy } = require('dubl');
-const { isKeyed, areObjects } = require('./utilities');
+const { isKeyed, areObjects, isValidPath, _get } = require('./utilities');
 
 // TODO: path should become array and this should become a recursive function with a fallback
 // TODO: use more modern `tupos` functionality
@@ -14,20 +14,14 @@ const { isKeyed, areObjects } = require('./utilities');
  * If any other step is not an object, should return null.
  * 
  * @param {Object} obj Object to retrieve value from
- * @param {string} path Period-separated path to desired value
+ * @param {Array<string | number | symbol> | string} path Path to desired value
  * @returns {*}
  */
 const get = (obj, path) => {
-    const segments = path.split('.');
-    let pointer = obj;
-    const validTypes = [ types.OBJECT, types.ARRAY ];
+    if (!obj || !isValidPath(path)) return undefined;
+    if (typeOf(path) === types.STRING) path = path.split('.');
 
-    while (validTypes.includes(typeOf(pointer)) && segments.length > 0) {
-        const segment = segments.shift();
-        pointer = pointer[segment];
-    }
-
-    return segments.length === 0 && pointer !== undefined ? pointer : null;
+    return _get(obj, path);
 }
 
 // TODO: Make more recursive and use more modern `tupos` functionality
