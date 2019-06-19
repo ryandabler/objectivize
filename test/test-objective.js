@@ -89,7 +89,7 @@ describe('objectivize.js', function() {
     });
 
     describe('update()', function() {
-        it('Should update an updated object', function() {
+        it('Should return true if successfully updated', function() {
             const updateFn = arr => arr.concat(4);
             const obj = {
                 a: {
@@ -100,13 +100,13 @@ describe('objectivize.js', function() {
             };
             const path = 'a.b.c';
             const result = update(obj, path, updateFn);
-            const objectPaths = destructure(result);
+            const objectPaths = destructure(obj);
 
             expect(Object.keys(objectPaths).length).to.equal(4);
-            expect(equals(result.a.b.c, [ 1, 2, 3, 4 ])).to.be.true;
+            expect(result).to.be.true;
         });
 
-        it('Should return an object unchanged if path is non-existent', function() {
+        it('Should return false if update couldn\'t happen', function() {
             const updateFn = num => num + 1;
             const obj = {
                 a: {
@@ -116,11 +116,12 @@ describe('objectivize.js', function() {
                 }
             };
             const path = 'a.b.d.e';
-            const result = update(copy(obj), path, updateFn);
-            const resultPaths = destructure(result);
+            const result = update(obj, path, updateFn);
+            const resultPaths = destructure(obj);
 
             expect(Object.keys(resultPaths).length).to.equal(1);
-            expect(equals(obj, result)).to.be.true;
+            expect(obj.a.b.c).to.equal(1);
+            expect(result).to.be.false;
         });
     });
 

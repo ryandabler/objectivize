@@ -52,14 +52,14 @@ const set = (obj, path, val) => {
  * @param {Object} obj Object to update some portion of sub-tree
  * @param {string} path Path leading to part to update
  * @param {Function} updateFn Updates the value
+ * @returns {boolean}
  */
 const update = (obj, path, updateFn) => {
     const updatable = get(obj, path);
-    if (!updatable) return obj;
+    if (!updatable) return false;
  
     const updatedItem = updateFn(updatable);
-    set(obj, path, updatedItem);
-    return obj;
+    return set(obj, path, updatedItem);
 }
 
 /**
