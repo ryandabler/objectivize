@@ -97,8 +97,7 @@ const generateObjectFromPath = (val, path) => {
 const merge = (mainObj, subObj) => {
     let retObj = { ...mainObj };
     for (const key in subObj) {
-        if (key in retObj && areObjects(retObj[key], subObj[key])
-        ) {
+        if (key in retObj && areObjects(retObj[key], subObj[key])) {
             retObj[key] = merge(retObj[key], subObj[key]);
         } else if (key in retObj && typeOf(retObj[key]) === types.ARRAY) {
             retObj[key] = retObj[key].concat(subObj[key]);
