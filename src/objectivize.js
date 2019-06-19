@@ -156,7 +156,6 @@ const destructure = (obj, path = null, shouldTraverse = () => true) => {
     return retObj;
 }
 
-// TODO: Maybe use `isPrimitive` instead of `!isKeyed`?
 /**
  * Checks if one object contains another.
  * 
