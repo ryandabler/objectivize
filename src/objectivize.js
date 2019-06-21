@@ -2,7 +2,7 @@
 
 const { types, typeOf } = require('tupos');
 const { copy } = require('dubl');
-const { isKeyed, areObjects, isValidPath, _get, _set } = require('./utilities');
+const { isKeyed, areObjects, isValidPath, _get, _set, _has } = require('./utilities');
 
 /**
  * Retrieves the value from a nested object given a path.
@@ -61,6 +61,22 @@ const update = (obj, path, updateFn) => {
     const updatedItem = updateFn(updatable);
     return set(obj, path, updatedItem);
 }
+
+/**
+ * Check if an object has a particular path
+ * 
+ * Will recurse down a supplied path of an object to check if it exists.
+ * 
+ * @param {Object} obj Object to update some portion of sub-tree
+ * @param {string} path Path leading to part to update
+ * @returns {boolean}
+ */
+const has = (obj, path) => {
+    if (!obj || !isValidPath(path)) return false;
+    if (typeOf(path) === types.STRING) path = path.split('.');
+ 
+    return _has(obj, path);
+};
 
 /**
  * Creates a nested object whose keys are the specified path, terminating at the value.
@@ -191,6 +207,7 @@ module.exports = {
     get,
     set,
     update,
+    has,
     generateObjectFromPath,
     merge,
     destructure,

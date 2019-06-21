@@ -43,4 +43,11 @@ const _set = (obj, path, val) => {
     return _set(obj[path[0]], path.slice(1), val);
 };
 
-module.exports = { isKeyed, areObjects, isValidPath, _get, _set };
+const _has = (obj, path) => {
+    if (path.length === 0) return true;
+    if (!isKeyed(obj)) return false;
+
+    return _has(obj[path[0]], path.slice(1));
+}
+
+module.exports = { isKeyed, areObjects, isValidPath, _get, _set, _has };

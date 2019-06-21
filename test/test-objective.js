@@ -7,6 +7,7 @@ const {
     get,
     set,
     update,
+    has,
     generateObjectFromPath,
     merge,
     destructure,
