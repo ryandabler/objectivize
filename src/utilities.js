@@ -45,7 +45,10 @@ const _set = (obj, path, val) => {
 
 const _has = (obj, path) => {
     if (!isKeyed(obj)) return false;
-    if (path.length === 0) return true;
+    
+    if (path.length === 1) {
+        return Reflect.has(obj, path[0]);
+    }
 
     return _has(obj[path[0]], path.slice(1));
 }
