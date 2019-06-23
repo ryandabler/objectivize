@@ -2,7 +2,7 @@
 
 const { types, typeOf } = require('tupos');
 const { copy } = require('dubl');
-const { isKeyed, areObjects, isValidPath, _get, _set, _has } = require('./utilities');
+const { isKeyed, areObjects, isValidPath, _get, _set, _delete, _has } = require('./utilities');
 
 /**
  * Retrieves the value from a nested object given a path.
@@ -60,6 +60,25 @@ const update = (obj, path, updateFn) => {
  
     const updatedItem = updateFn(updatable);
     return set(obj, path, updatedItem);
+}
+
+/**
+ * Deletes the value from a nested object given a path.
+ * 
+ * Iterates over an array containing the path to traverse in `obj` to find the value.
+ * The value of each step in the path should be an object except for the final stage.
+ * If any other step is not an object, should return `false`. Returns `true` if 
+ * property was successfully deleted.
+ * 
+ * @param {Object} obj Object to retrieve value from
+ * @param {Array<string | number | symbol> | string} path Path to desired value
+ * @returns {*}
+ */
+const del = (obj, path) => {
+    if (!obj || !isValidPath(path)) return undefined;
+    if (typeOf(path) === types.STRING) path = path.split('.');
+
+    return _delete(obj, path);
 }
 
 /**
@@ -309,6 +328,7 @@ module.exports = {
     get,
     set,
     update,
+    del,
     has,
     generateObjectFromPath,
     merge,

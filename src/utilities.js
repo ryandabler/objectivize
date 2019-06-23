@@ -43,6 +43,17 @@ const _set = (obj, path, val) => {
     return _set(obj[path[0]], path.slice(1), val);
 };
 
+const _delete = (obj, path) => { 
+    if (!isKeyed(obj)) return false;
+
+    if (path.length === 1) {
+        delete obj[path[0]];
+        return true;
+    }
+
+    return _delete(obj[path[0]], path.slice(1));
+};
+
 const _has = (obj, path) => {
     if (!isKeyed(obj)) return false;
     
@@ -53,4 +64,4 @@ const _has = (obj, path) => {
     return _has(obj[path[0]], path.slice(1));
 }
 
-module.exports = { isKeyed, areObjects, isValidPath, _get, _set, _has };
+module.exports = { isKeyed, areObjects, isValidPath, _get, _set, _delete, _has };
