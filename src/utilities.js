@@ -44,8 +44,8 @@ const _set = (obj, path, val) => {
 };
 
 const _has = (obj, path) => {
-    if (path.length === 0) return true;
     if (!isKeyed(obj)) return false;
+    if (path.length === 0) return true;
 
     return _has(obj[path[0]], path.slice(1));
 }
