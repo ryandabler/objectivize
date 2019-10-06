@@ -1,4 +1,18 @@
-const { types, isOneOf, are } = require('tupos');
+const { types, isOneOf } = require('tupos');
+const {
+    $OBJECT,
+    $STRING,
+    $ARRAY,
+    $INT8ARRAY,
+    $UINT8ARRAY,
+    $UINT8CLAMPEDARRAY,
+    $INT16ARRAY,
+    $UINT16ARRAY,
+    $INT32ARRAY,
+    $UINT32ARRAY,
+    $FLOAT32ARRAY,
+    $FLOAT64ARRAY
+} = types;
 
 /**
 * Checks if an item has a type specified in the list.
@@ -7,21 +21,21 @@ const { types, isOneOf, are } = require('tupos');
 * @returns {boolean}
 */
 const isKeyed = isOneOf(
-    types.OBJECT,
-    types.ARRAY,
-    types.INT8ARRAY,
-    types.UINT8ARRAY,
-    types.UINT8CLAMPEDARRAY,
-    types.INT16ARRAY,
-    types.UINT16ARRAY,
-    types.INT32ARRAY,
-    types.UINT32ARRAY,
-    types.FLOAT32ARRAY,
-    types.FLOAT64ARRAY
+    $OBJECT,
+    $ARRAY,
+    $INT8ARRAY,
+    $UINT8ARRAY,
+    $UINT8CLAMPEDARRAY,
+    $INT16ARRAY,
+    $UINT16ARRAY,
+    $INT32ARRAY,
+    $UINT32ARRAY,
+    $FLOAT32ARRAY,
+    $FLOAT64ARRAY
 );
 
-const areObjects = are(types.OBJECT);
-const isValidPath = isOneOf(types.ARRAY, types.STRING);
+const areObjects = (...values) => values.every($OBJECT);
+const isValidPath = isOneOf($ARRAY, $STRING);
 
 const _get = (obj, path) => {
     if (path.length === 0) return obj;

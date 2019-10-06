@@ -1,8 +1,9 @@
 'use strict';
 
-const { types, typeOf } = require('tupos');
+const { types } = require('tupos');
 const { copy } = require('dubl');
 const { isKeyed, areObjects, isValidPath, _get, _set, _delete, _has } = require('./utilities');
+const { $STRING, $ARRAY } = types;
 
 /**
  * Retrieves the value from a nested object given a path.
@@ -17,7 +18,7 @@ const { isKeyed, areObjects, isValidPath, _get, _set, _delete, _has } = require(
  */
 const get = (obj, path) => {
     if (!obj || !isValidPath(path)) return undefined;
-    if (typeOf(path) === types.STRING) path = path.split('.');
+    if ($STRING(path)) path = path.split('.');
 
     return _get(obj, path);
 }
@@ -37,7 +38,7 @@ const get = (obj, path) => {
  */
 const set = (obj, path, val) => {
     if (!obj || !isValidPath(path)) return false;
-    if (typeOf(path) === types.STRING) path = path.split('.');
+    if ($STRING(path)) path = path.split('.');
 
     return _set(obj, path, val);
 }
@@ -76,7 +77,7 @@ const update = (obj, path, updateFn) => {
  */
 const del = (obj, path) => {
     if (!obj || !isValidPath(path)) return undefined;
-    if (typeOf(path) === types.STRING) path = path.split('.');
+    if ($STRING(path)) path = path.split('.');
 
     return _delete(obj, path);
 }
@@ -92,7 +93,7 @@ const del = (obj, path) => {
  */
 const has = (obj, path) => {
     if (!obj || !isValidPath(path)) return false;
-    if (typeOf(path) === types.STRING) path = path.split('.');
+    if ($STRING(path)) path = path.split('.');
  
     return _has(obj, path);
 };
@@ -134,7 +135,7 @@ const merge = (mainObj, subObj) => {
     for (const key in subObj) {
         if (key in retObj && areObjects(retObj[key], subObj[key])) {
             retObj[key] = merge(retObj[key], subObj[key]);
-        } else if (key in retObj && typeOf(retObj[key]) === types.ARRAY) {
+        } else if (key in retObj && $ARRAY(retObj[key])) {
             retObj[key] = retObj[key].concat(subObj[key]);
         } else if (key in retObj) {
             retObj[key] = [ retObj[key], subObj[key] ];

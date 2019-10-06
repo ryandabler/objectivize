@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "dubl": "^1.1.0",
-    "tupos": "^1.2.2"
+    "tupos": "^2.0.0"
   },
   "babel": {
     "presets": [

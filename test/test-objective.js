@@ -15,6 +15,7 @@ const {
     equals,
     deepMerge
 } = require('../src/objectivize');
+const { $ARRAY, $STRING, $SYMBOL } = types;
 
 const expect = chai.expect;
 
@@ -251,8 +252,7 @@ describe('objectivize.js', function() {
         });
 
         it('Should account for a custom traversal', function() {
-            const isArray = is(types.ARRAY);
-            const shouldTraverse = val => !isArray(val);
+            const shouldTraverse = val => !$ARRAY(val);
             const paths = [
                 [ 'a.b.c', [ 'path 1', 'path 2', 'path 3' ] ],
                 [ 'a.b.d', true ],
