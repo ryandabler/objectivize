@@ -78,4 +78,13 @@ const _has = (obj, path) => {
     return _has(obj[path[0]], path.slice(1));
 }
 
-module.exports = { isKeyed, areObjects, isValidPath, _get, _set, _delete, _has };
+const mergeCollision = (retObj, subObj, key) => {
+    if ($ARRAY(retObj[key])) {
+        return retObj[key].concat(subObj[key]);
+    }
+
+    retObj[key] = [ retObj[key], subObj[key] ];
+    return retObj[key];
+};
+
+module.exports = { isKeyed, areObjects, isValidPath, _get, _set, _delete, _has, mergeCollision };

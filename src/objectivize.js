@@ -2,7 +2,7 @@
 
 const { types } = require('tupos');
 const { copy } = require('dubl');
-const { isKeyed, areObjects, isValidPath, _get, _set, _delete, _has } = require('./utilities');
+const { isKeyed, areObjects, isValidPath, _get, _set, _delete, _has, mergeCollision } = require('./utilities');
 const { $STRING, $ARRAY } = types;
 
 /**
@@ -130,15 +130,13 @@ const generateObjectFromPath = (val, path) => {
  * @param {Object} subObj Object being merged
  * @returns {Object}
  */
-const merge = (mainObj, subObj) => {
+const merge = (mainObj, subObj, onCollision = mergeCollision) => {
     let retObj = { ...mainObj };
     for (const key in subObj) {
         if (key in retObj && areObjects(retObj[key], subObj[key])) {
             retObj[key] = merge(retObj[key], subObj[key]);
-        } else if (key in retObj && $ARRAY(retObj[key])) {
-            retObj[key] = retObj[key].concat(subObj[key]);
         } else if (key in retObj) {
-            retObj[key] = [ retObj[key], subObj[key] ];
+            retObj[key] = onCollision(retObj, subObj, key);
         } else {
             retObj = { ...retObj, [key]: subObj[key] };
         }
@@ -157,9 +155,10 @@ const merge = (mainObj, subObj) => {
  * @param {Object} subObj Object being merged
  * @returns {Object}
  */
-const deepMerge = (mainObj, subObj) => merge(
+const deepMerge = (mainObj, subObj, onCollision = mergeCollision) => merge(
     copy(mainObj),
-    copy(subObj)
+    copy(subObj),
+    onCollision
 );
 
 /**
