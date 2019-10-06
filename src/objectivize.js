@@ -1,7 +1,6 @@
 'use strict';
 
 const { types } = require('tupos');
-const { copy } = require('dubl');
 const { isKeyed, areObjects, isValidPath, _get, _set, _delete, _has, mergeCollision } = require('./utilities');
 const { $STRING, $ARRAY } = types;
 
@@ -144,22 +143,6 @@ const merge = (mainObj, subObj, onCollision = mergeCollision) => {
 
     return retObj;
 }
-
-/**
- * Merges a deep copies of two objects together.
- * 
- * Works identically to 'merge' except it makes deep copies
- * of the two objects that are to be merged together.
- * 
- * @param {Object} mainObj Object to have other object merged into
- * @param {Object} subObj Object being merged
- * @returns {Object}
- */
-const deepMerge = (mainObj, subObj, onCollision = mergeCollision) => merge(
-    copy(mainObj),
-    copy(subObj),
-    onCollision
-);
 
 /**
  * Traverses an object and flattens it.
@@ -335,7 +318,6 @@ module.exports = {
     destructure,
     contains,
     equals,
-    deepMerge,
     keys: Object.freeze(keys),
     values: Object.freeze(values),
     entries: Object.freeze(entries)

@@ -13,7 +13,6 @@ const {
     destructure,
     contains,
     equals,
-    deepMerge
 } = require('../src/objectivize');
 const { $ARRAY, $STRING, $SYMBOL } = types;
 
@@ -352,29 +351,6 @@ describe('objectivize.js', function() {
             );
 
             expect(results.some(result => result)).to.be.false;
-        });
-    });
-
-    describe('deepMerge()', function() {
-        it('Should create a deep copy before merging', function() {
-            const objectRef = {
-                a: 1
-            };
-
-            const mainObj = {
-                b: {
-                    d: 1
-                }
-            };
-
-            const subObj = {
-                b: {
-                    c: objectRef
-                }
-            }
-
-            const result = deepMerge(mainObj, subObj);
-            expect(result.b.c).to.not.equal(objectRef);
         });
     });
 });

@@ -34,7 +34,6 @@
     "nyc": "^14.1.1"
   },
   "dependencies": {
-    "dubl": "^1.1.0",
     "tupos": "^2.0.0"
   },
   "babel": {
