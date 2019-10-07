@@ -2,7 +2,7 @@
 // Initialize
 ////////////////////////////
 const chai  = require('chai');
-const { types, is } = require('tupos');
+const { types } = require('tupos');
 const {
     get,
     set,
@@ -14,7 +14,8 @@ const {
     contains,
     equals,
 } = require('../src/objectivize');
-const { $ARRAY, $STRING, $SYMBOL } = types;
+const { keys } = require('../src/prototype');
+const { $ARRAY } = types;
 
 const expect = chai.expect;
 

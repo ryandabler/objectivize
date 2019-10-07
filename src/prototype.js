@@ -1,5 +1,3 @@
-import { __esModule } from "tupos";
-
 /**
  * Obtains all keys from an object.
  * 
