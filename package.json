@@ -31,7 +31,8 @@
     "coveralls": "^3.0.6",
     "cross-env": "^5.2.1",
     "mocha": "^5.2.0",
-    "nyc": "^15.0.0"
+    "nyc": "^15.0.0",
+    "sinon": "^8.0.4"
   },
   "dependencies": {
     "tupos": "^2.0.0"
