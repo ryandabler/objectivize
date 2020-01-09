@@ -1,8 +1,7 @@
 'use strict';
 
 const { types } = require('tupos');
-const { isKeyed, areObjects, isValidPath, _get, _set, _delete, _has, mergeCollision } = require('./utilities');
-const { $STRING, $ARRAY } = types;
+const { compose, isKeyed, areObjects, isValidPath, _get, _set, _delete, _has, mergeCollision, normalizePaths, hasObjectAndPath, hasObjectPathAndValue, hasObjectPathAndUpdater } = require('./utilities');
 
 /**
  * Retrieves the value from a nested object given a path.
@@ -15,12 +14,7 @@ const { $STRING, $ARRAY } = types;
  * @param {Array<string | number | symbol> | string} path Path to desired value
  * @returns {*}
  */
-const get = (obj, path) => {
-    if (!obj || !isValidPath(path)) return undefined;
-    if ($STRING(path)) path = path.split('.');
-
-    return _get(obj, path);
-}
+const get = compose(_get, normalizePaths, hasObjectAndPath);
 
 /**
  * Set the value in a nested object given a path.
@@ -35,12 +29,7 @@ const get = (obj, path) => {
  * @param {*} val New value to set
  * @returns {boolean}
  */
-const set = (obj, path, val) => {
-    if (!obj || !isValidPath(path)) return false;
-    if ($STRING(path)) path = path.split('.');
-
-    return _set(obj, path, val);
-}
+const set = compose(_set, normalizePaths, hasObjectPathAndValue);
 
 /**
  * Update a deeply nested portion of an object.
@@ -54,13 +43,16 @@ const set = (obj, path, val) => {
  * @param {Function} updateFn Updates the value
  * @returns {boolean}
  */
-const update = (obj, path, updateFn) => {
-    const updatable = get(obj, path);
-    if (!updatable) return false;
- 
-    const updatedItem = updateFn(updatable);
-    return set(obj, path, updatedItem);
-}
+const update = compose(
+    (obj, path, updateFn) => {
+        const updatable = get(obj, path);
+        if (!updatable) return false;
+    
+        const updatedItem = updateFn(updatable);
+        return set(obj, path, updatedItem);
+    },
+    normalizePaths
+);
 
 /**
  * Deletes the value from a nested object given a path.
@@ -74,12 +66,7 @@ const update = (obj, path, updateFn) => {
  * @param {Array<string | number | symbol> | string} path Path to desired value
  * @returns {*}
  */
-const del = (obj, path) => {
-    if (!obj || !isValidPath(path)) return undefined;
-    if ($STRING(path)) path = path.split('.');
-
-    return _delete(obj, path);
-}
+const del = compose(_delete, normalizePaths, hasObjectAndPath);
 
 /**
  * Check if an object has a particular path
@@ -90,12 +77,7 @@ const del = (obj, path) => {
  * @param {string} path Path leading to part to update
  * @returns {boolean}
  */
-const has = (obj, path) => {
-    if (!obj || !isValidPath(path)) return false;
-    if ($STRING(path)) path = path.split('.');
- 
-    return _has(obj, path);
-};
+const has = compose(_has, normalizePaths, hasObjectAndPath);
 
 /**
  * Creates a nested object whose keys are the specified path, terminating at the value.

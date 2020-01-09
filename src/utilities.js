@@ -13,6 +13,7 @@ const {
     $FLOAT32ARRAY,
     $FLOAT64ARRAY
 } = types;
+const { normalizeParams, ensureParams } = require('./decorators');
 
 /**
 * Checks if an item has a type specified in the list.
@@ -87,4 +88,12 @@ const mergeCollision = (retObj, subObj, key) => {
     return retObj[key];
 };
 
-module.exports = { isKeyed, areObjects, isValidPath, _get, _set, _delete, _has, mergeCollision };
+const compose = (...fns) => fns.reduce((acc, fn) => fn(acc));
+
+const exists = () => true;
+const splitStringPaths = path => $STRING(path) ? path.split('.') : path;
+const normalizePaths = normalizeParams(x => x, splitStringPaths, x => x);
+const hasObjectAndPath = ensureParams(() => undefined, isKeyed, isValidPath);
+const hasObjectPathAndValue = ensureParams(() => false, isKeyed, isValidPath, exists);
+
+module.exports = { compose, isKeyed, areObjects, isValidPath, _get, _set, _delete, _has, mergeCollision, splitStringPaths, normalizePaths, hasObjectAndPath, hasObjectPathAndValue };
