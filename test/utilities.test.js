@@ -4,7 +4,7 @@
 const chai = require('chai');
 const sinon = require('sinon');
 const { types } = require('tupos');
-const { splitStringPaths, normalizePaths, hasObjectAndPath } = require('../src/utilities');
+const { splitStringPaths, normalizePaths, hasObjectAndPath, hasObjectPathAndValue } = require('../src/utilities');
 
 const { $FUNCTION } = types;
 
@@ -87,6 +87,42 @@ describe('utilities.js', function() {
             results.forEach(result => {
                 expect(result).to.be.undefined;
             });
+        });
+    });
+
+    describe('hasObjectPathAndValue()', function() {
+        it('Should return `false` if first param is not traversable', function() {
+            const firstParams = [
+                2,
+                Symbol(),
+                () => {}
+            ];
+            const decoratee = hasObjectAndPath(x => x);
+            const results = firstParams.map(firstParam => decoratee(firstParam, 'abc'));
+
+            results.forEach(result => {
+                expect(result).to.be.undefined;
+            })
+        });
+
+        it('Should return `false` if second param is not a valid path', function() {
+            const secondParams = [
+                1,
+                {}
+            ];
+            const decoratee = hasObjectAndPath(x => x);
+            const results = secondParams.map(secondParam => decoratee({}, secondParam));
+
+            results.forEach(result => {
+                expect(result).to.be.undefined;
+            });
+        });
+
+        it('Should return `false` if third param isn\'t supplied', function() {
+            const decoratee = hasObjectPathAndValue(x => x);
+            const result = decoratee({}, 'abc');
+
+            expect(result).to.be.false;
         });
     });
 });

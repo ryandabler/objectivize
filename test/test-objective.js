@@ -7,6 +7,7 @@ const {
     get,
     set,
     update,
+    del,
     has,
     generateObjectFromPath,
     merge,
@@ -49,6 +50,15 @@ describe('objectivize.js', function() {
             const result = get(obj, path);
             expect(result).to.equal(undefined);
         });
+
+        it('Should return undefined for bad parameters', function() {
+            const params = [
+                [ undefined, 'a.b.c' ],
+                [ { a: { b: 2 } }, 1 ]
+            ];
+            const results = params.map(_params => get(..._params));
+            expect(results.every(result => result === undefined)).to.be.true;
+        });
     });
 
     describe('set()', function() {
@@ -87,6 +97,25 @@ describe('objectivize.js', function() {
             expect(Object.keys(resultPaths).length).to.equal(2);
             expect(get(obj, path)).to.equal(setValue);
         });
+
+        it('Should abort if trying to traverse an non-traversable type', function() {
+            const obj = {
+                a: {
+                    b: {
+                        c: 1
+                    },
+                    d: 3
+                }
+            };
+            const path = 'a.d.e';
+            const setValue = 3;
+            const result = set(obj, path, setValue);
+            const resultPaths = destructure(obj);
+
+            expect(result).to.be.false;
+            expect(Object.keys(resultPaths).length).to.equal(2);
+            expect(get(obj, path)).to.equal(undefined);
+        });
     });
 
     describe('update()', function() {
@@ -122,6 +151,70 @@ describe('objectivize.js', function() {
 
             expect(Object.keys(resultPaths).length).to.equal(1);
             expect(obj.a.b.c).to.equal(1);
+            expect(result).to.be.false;
+        });
+    });
+
+    describe('del()', function() {
+        it('Should return true if successfully deleted', function() {
+            const obj = {
+                a: {
+                    b: {
+                        c: [ 1, 2, 3 ]
+                    }
+                }
+            };
+            const path = 'a.b.c';
+            const result = del(obj, path);
+
+            expect(has(obj, path)).to.be.false;
+            expect(result).to.be.true;
+        });
+
+        it('Should return false if delete couldn\'t happen', function() {
+            const obj = {
+                a: {
+                    b: {
+                        c: 1
+                    }
+                }
+            };
+            const path = 'a.b.d.e';
+            const result = del(obj, path);
+            const objPaths = destructure(obj);
+
+            expect(obj.a.b.c).to.equal(1);
+            expect(keys(objPaths).length).to.equal(1);
+            expect(result).to.be.false;
+        });
+    });
+
+    describe('has()', function() {
+        it('Should return true if path exists', function() {
+            const obj = {
+                a: {
+                    b: {
+                        c: [ 1, 2, 3 ]
+                    }
+                }
+            };
+            const path = 'a.b.c.1';
+            const result = has(obj, path);
+
+            expect(result).to.be.true;
+        });
+
+        it('Should return false if path doesn\'t exist', function() {
+            const obj = {
+                a: {
+                    b: {
+                        c: 1
+                    }
+                }
+            };
+            const path = 'a.b.d.e';
+            const result = has(obj, path);
+
             expect(result).to.be.false;
         });
     });
