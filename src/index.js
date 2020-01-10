@@ -9,6 +9,12 @@ import {
     destructure,
     contains,
     equals,
+    map,
+    mapKeys,
+    mapValues,
+    find,
+    findKey,
+    findValue,
 } from './objectivize';
 import { keys, values, entries } from './prototype';
 
@@ -26,4 +32,10 @@ export {
     keys,
     values,
     entries,
+    map,
+    mapKeys,
+    mapValues,
+    find,
+    findKey,
+    findValue,
 };
