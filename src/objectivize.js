@@ -85,7 +85,7 @@ const has = compose(_has, normalizePaths, hasObjectAndPath);
  * @param {string} path Specified path to the value
  * @returns {Object}
  */
-const generateObjectFromPath = (val, path) => {
+const generate = (val, path) => {
     const retObj = {};
     let pointer = retObj;
 
@@ -192,7 +192,7 @@ export {
     update,
     del,
     has,
-    generateObjectFromPath,
+    generate,
     merge,
     destructure,
     contains,

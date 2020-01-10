@@ -9,7 +9,7 @@ import {
     update,
     del,
     has,
-    generateObjectFromPath,
+    generate,
     merge,
     destructure,
     contains,
@@ -218,11 +218,11 @@ describe('objectivize.js', function() {
         });
     });
 
-    describe('generateObjectFromPath()', function() {
+    describe('generate()', function() {
         it('Should generate an object with a specified path terminating with a value', function() {
             const path = 'a.b.c';
             const value = 'test value';
-            const result = generateObjectFromPath(value, path);
+            const result = generate(value, path);
             const resultPaths = destructure(result);
 
             expect(Object.keys(resultPaths).length).to.equal(1);
