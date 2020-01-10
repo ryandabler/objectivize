@@ -1,6 +1,10 @@
 const normalizeParams = (...normalizerFns) => fn =>
   function withNormalizedParams(..._params) {
-    const params = _params.map((param, idx) => normalizerFns[idx](param));
+    const params = _params.map((param, idx) => {
+      const normalizerFn = normalizerFns[idx] || (x => x);
+      return normalizerFn(param);
+    });
+
     return fn.call(this, ...params);
   };
 

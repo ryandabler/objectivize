@@ -65,6 +65,18 @@ describe('decorators.js', function() {
                     sinon.assert.calledWith(nFn1, 0);
                     sinon.assert.calledWith(nFn2, 'a');
                 });
+
+                it('Should default to identity function for params beyond amount that is normalized', function() {
+                    const nFn = n => 2 * n;
+                    const dFn = sinon.spy();
+                    const params = [ 1, {}, false ];
+
+                    const normalizingFn = normalizeParams(nFn);
+                    const withNormalizedParams = normalizingFn(dFn);
+                    withNormalizedParams(...params);
+
+                    sinon.assert.calledWith(dFn, 2, {}, false);
+                });
     
                 it('Should call the decorated function with transformed params', function() {
                     const nFn = n => 2 * n;
