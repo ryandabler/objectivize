@@ -95,25 +95,25 @@ describe('utilities.js', function() {
     describe('hasObjectPathAndValue()', function() {
         it('Should return `false` if first param is not traversable', function() {
             const firstParams = [2, Symbol(), () => {}];
-            const decoratee = hasObjectAndPath(x => x);
+            const decoratee = hasObjectPathAndValue(x => x);
             const results = firstParams.map(firstParam =>
-                decoratee(firstParam, 'abc')
+                decoratee(firstParam, 'abc', 1)
             );
 
             results.forEach(result => {
-                expect(result).to.be.undefined;
+                expect(result).to.be.false;
             });
         });
 
         it('Should return `false` if second param is not a valid path', function() {
             const secondParams = [true, {}];
-            const decoratee = hasObjectAndPath(x => x);
+            const decoratee = hasObjectPathAndValue(x => x);
             const results = secondParams.map(secondParam =>
-                decoratee({}, secondParam)
+                decoratee({}, secondParam, 1)
             );
 
             results.forEach(result => {
-                expect(result).to.be.undefined;
+                expect(result).to.be.false;
             });
         });
 
