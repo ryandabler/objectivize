@@ -110,7 +110,7 @@ describe('decorators.js', function() {
             });
 
             describe('withEnsuredParams()', function() {
-                it('Should call `onInvalid` if ensurer functions have different cardinality than params', function() {
+                it('Should call `onInvalid` if ensurer functions have smaller cardinality than params', function() {
                     const onInvalid = sinon.spy();
                     const ensurerFn = () => true;
 
@@ -119,6 +119,39 @@ describe('decorators.js', function() {
                     withEnsuredParams(0, 1);
 
                     sinon.assert.calledOnce(onInvalid);
+                });
+
+                it('Should call `onInvalid` if required ensurer functions have larger cardinality than params', function() {
+                    const onInvalid = sinon.spy();
+                    const ensurerFn = () => true;
+
+                    const ensuringFn = ensureParams(
+                        onInvalid,
+                        ensurerFn,
+                        ensurerFn
+                    );
+                    const withEnsuredParams = ensuringFn(x => x);
+                    withEnsuredParams(0);
+
+                    sinon.assert.calledOnce(onInvalid);
+                });
+
+                it('Should call decorated function only optional parameters are missing', function() {
+                    const onInvalid = () => {};
+                    const ensurerFn = () => true;
+                    const optional = () => true;
+                    optional.optional = true;
+                    const decoratee = sinon.spy();
+
+                    const ensuringFn = ensureParams(
+                        onInvalid,
+                        ensurerFn,
+                        optional
+                    );
+                    const withEnsuredParams = ensuringFn(decoratee);
+                    withEnsuredParams(0);
+
+                    sinon.assert.calledOnce(decoratee);
                 });
 
                 it('Should call `onInvalid` if any ensurer function returns false', function() {
