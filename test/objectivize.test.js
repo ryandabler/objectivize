@@ -22,7 +22,7 @@ import {
 } from '../src/objectivize';
 import { keys, values, entries } from '../src/prototype';
 
-const { $ARRAY } = types;
+const { $ARRAY, $OBJECT } = types;
 
 ////////////////////////////
 // Test
@@ -444,6 +444,17 @@ describe('objectivize.js', function() {
     });
 
     describe('map()', function() {
+        it('Should return an object', function() {
+            const obj = {
+                key1: 'a',
+                key2: 1,
+                key3: { a: 1 },
+            };
+            const mappedObj = map(obj, x => x);
+
+            expect($OBJECT(mappedObj)).to.be.true;
+        });
+
         it('Should call the mapping function on each [key, value] pair', function() {
             const obj = {
                 key1: 'a',
@@ -463,6 +474,19 @@ describe('objectivize.js', function() {
     });
 
     describe('mapKeys()', function() {
+        it('Should return an object', function() {
+            const obj = {
+                key1: 'a',
+                key2: 1,
+                key3: {
+                    a: 1,
+                },
+            };
+            const mappedObj = map(obj, x => x);
+
+            expect($OBJECT(mappedObj)).to.be.true;
+        });
+
         it('Should call the mapping function on each key', function() {
             const obj = {
                 key1: 'a',
@@ -482,6 +506,19 @@ describe('objectivize.js', function() {
     });
 
     describe('mapValues()', function() {
+        it('Should return an object', function() {
+            const obj = {
+                key1: 'a',
+                key2: 1,
+                key3: {
+                    a: 1,
+                },
+            };
+            const mappedObj = map(obj, x => x);
+
+            expect($OBJECT(mappedObj)).to.be.true;
+        });
+
         it('Should call the mapping function on each value', function() {
             const obj = {
                 key1: 'a',
