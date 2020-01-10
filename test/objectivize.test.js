@@ -19,6 +19,9 @@ import {
     map,
     mapKeys,
     mapValues,
+    find,
+    findKey,
+    findValue,
 } from '../src/objectivize';
 import { keys, values, entries } from '../src/prototype';
 
@@ -534,6 +537,134 @@ describe('objectivize.js', function() {
             _values.forEach(value => {
                 mapFn.calledWithExactly(value);
             });
+        });
+    });
+
+    describe('find()', function() {
+        it('Should call the findFn with each [key, value, object] pair', function() {
+            const obj = {
+                key1: 'a',
+                key2: 1,
+                key3: { a: 1 },
+            };
+            const _entries = entries(obj);
+            const findFn = sinon.fake.returns(false);
+            find(obj, findFn);
+
+            expect(findFn.callCount).to.equal(_entries.length);
+            _entries.forEach(([key, value]) => {
+                findFn.calledWithExactly(key, value, obj);
+            });
+        });
+
+        it('Should return a [key, value] pair if found', function() {
+            const obj = {
+                key1: 'a',
+                key2: 1,
+                key3: { a: 1 },
+            };
+            const findFn = () => true;
+            const [key, value] = find(obj, findFn);
+
+            expect(key in obj).to.be.true;
+            expect(value).to.equal(obj[key]);
+        });
+
+        it('Should return `undefined` if nothing found', function() {
+            const obj = {
+                key1: 'a',
+                key2: 1,
+                key3: { a: 1 },
+            };
+            const findFn = () => false;
+            const entry = find(obj, findFn);
+
+            expect(entry).to.be.undefined;
+        });
+    });
+
+    describe('findKey()', function() {
+        it('Should call the findFn with each [key, value, object] pair', function() {
+            const obj = {
+                key1: 'a',
+                key2: 1,
+                key3: { a: 1 },
+            };
+            const _entries = entries(obj);
+            const findFn = sinon.fake.returns(false);
+            findKey(obj, findFn);
+
+            expect(findFn.callCount).to.equal(_entries.length);
+            _entries.forEach(([key, value]) => {
+                findFn.calledWithExactly(key, value, obj);
+            });
+        });
+
+        it('Should return a [key, value] pair if found', function() {
+            const obj = {
+                key1: 'a',
+                key2: 1,
+                key3: { a: 1 },
+            };
+            const findFn = () => true;
+            const key = findKey(obj, findFn);
+
+            expect(key in obj).to.be.true;
+        });
+
+        it('Should return `undefined` if nothing found', function() {
+            const obj = {
+                key1: 'a',
+                key2: 1,
+                key3: { a: 1 },
+            };
+            const findFn = () => false;
+            const key = find(obj, findFn);
+
+            expect(key).to.be.undefined;
+        });
+    });
+
+    describe('findValue()', function() {
+        it('Should call the findFn with each [key, value, object] pair', function() {
+            const obj = {
+                key1: 'a',
+                key2: 1,
+                key3: { a: 1 },
+            };
+            const _entries = entries(obj);
+            const findFn = sinon.fake.returns(false);
+            findValue(obj, findFn);
+
+            expect(findFn.callCount).to.equal(_entries.length);
+            _entries.forEach(([key, value]) => {
+                findFn.calledWithExactly(key, value, obj);
+            });
+        });
+
+        it('Should return a value if found', function() {
+            const obj = {
+                key1: 'a',
+                key2: 1,
+                key3: { a: 1 },
+            };
+            const findFn = () => true;
+            const value = findValue(obj, findFn);
+
+            const inObj = entries(obj).some(([, _value]) => _value === value);
+            expect(inObj).to.be.true;
+        });
+
+        it('Should return `undefined` if nothing found', function() {
+            const obj = {
+                key1: 'a',
+                key2: 1,
+                key3: { a: 1 },
+            };
+            const findFn = () => false;
+            const value = findValue(obj, findFn);
+
+            expect(value).to.be.undefined;
         });
     });
 });

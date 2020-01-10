@@ -252,6 +252,58 @@ const mapKeys = (obj, mapFn) =>
 const mapValues = (obj, mapFn) =>
     fromEntries(entries(obj).map(([key, value]) => [key, mapFn(value)]));
 
+/**
+ * Looks for and returns (if found) the first entry for the object whose
+ * `findFn` value is truthy.
+ *
+ * The function signature for `findFn` is:
+ * ```
+ * (key, value, originalObject) => true
+ * ```
+ *
+ * @param {Object} obj
+ * @param {Function} findFn
+ * @returns {[string | symbol | number, *]}
+ */
+const find = (obj, findFn) =>
+    entries(obj).find(([key, value]) => findFn(key, value, obj));
+
+/**
+ * Looks for and returns (if found) the first key for the object whose
+ * `findFn` value is truthy.
+ *
+ * The function signature for `findFn` is:
+ * ```
+ * (key, value, originalObject) => true
+ * ```
+ *
+ * @param {Object} obj
+ * @param {Function} findFn
+ * @returns {string | number | symbol}
+ */
+const findKey = (obj, findFn) => {
+    const [key] = find(obj, findFn) || [];
+    return key;
+};
+
+/**
+ * Looks for and returns (if found) the first value for the object whose
+ * `findFn` value is truthy.
+ *
+ * The function signature for `findFn` is:
+ * ```
+ * (key, value, originalObject) => true
+ * ```
+ *
+ * @param {Object} obj
+ * @param {Function} findFn
+ * @returns {*}
+ */
+const findValue = (obj, findFn) => {
+    const [, value] = find(obj, findFn) || [];
+    return value;
+};
+
 export {
     get,
     set,
@@ -267,4 +319,7 @@ export {
     map,
     mapKeys,
     mapValues,
+    find,
+    findKey,
+    findValue,
 };
