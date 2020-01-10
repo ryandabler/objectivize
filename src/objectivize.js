@@ -13,6 +13,7 @@ import {
     hasObjectAndPath,
     hasObjectPathAndValue,
 } from './utilities';
+import { keys, entries } from './prototype';
 
 /**
  * Retrieves the value from a nested object given a path.
@@ -201,6 +202,56 @@ const contains = (obj, maybeSubset) => {
  */
 const equals = (obj1, obj2) => contains(obj1, obj2) && contains(obj2, obj1);
 
+/**
+ * Takes an array of key-value tuples and converts them into an object.
+ *
+ * @param {Array<[string, *]>} entries
+ * @returns {Object}
+ */
+const fromEntries = entries =>
+    entries.reduce((obj, [key, value]) => {
+        set(obj, key, value);
+        return obj;
+    }, {});
+
+/**
+ * Takes an object and modifies each entry for that object.
+ *
+ * The mapping function must have the following signature in order
+ * for the mapped entries to be reassembled:
+ * ```
+ * (string, any) => [string, any]
+ * ```
+ *
+ * @param {Object} obj
+ * @param {Function} mapFn
+ * @returns {Object}
+ */
+const map = (obj, mapFn) => {
+    const mappedEntries = entries(obj).map(([key, value]) => mapFn(key, value));
+    return fromEntries(mappedEntries);
+};
+
+/**
+ * Takes an object and modifies the keys according to the specified mapping function.
+ *
+ * @param {Object} obj
+ * @param {Function} mapFn
+ * @returns {Object}
+ */
+const mapKeys = (obj, mapFn) =>
+    fromEntries(entries(obj).map(([key, value]) => [mapFn(key), value]));
+
+/**
+ * Takes an object and modifies the values according to the specified mapping function.
+ *
+ * @param {Object} obj
+ * @param {Function} mapFn
+ * @returns {Object}
+ */
+const mapValues = (obj, mapFn) =>
+    fromEntries(entries(obj).map(([key, value]) => [key, mapFn(value)]));
+
 export {
     get,
     set,
@@ -212,4 +263,8 @@ export {
     destructure,
     contains,
     equals,
+    fromEntries,
+    map,
+    mapKeys,
+    mapValues,
 };

@@ -2,6 +2,7 @@
 // Initialize
 ////////////////////////////
 import { expect } from 'chai';
+import sinon from 'sinon';
 import { types } from 'tupos';
 import {
     get,
@@ -14,8 +15,12 @@ import {
     destructure,
     contains,
     equals,
+    fromEntries,
+    map,
+    mapKeys,
+    mapValues,
 } from '../src/objectivize';
-import { keys } from '../src/prototype';
+import { keys, values, entries } from '../src/prototype';
 
 const { $ARRAY } = types;
 
@@ -417,6 +422,81 @@ describe('objectivize.js', function() {
             const results = objects.map(([obj, subObj]) => equals(obj, subObj));
 
             expect(results.some(result => result)).to.be.false;
+        });
+    });
+
+    describe('fromEntries()', function() {
+        it('Should build an object from an array of [key, value] pairs', function() {
+            const entries = [
+                ['key1', 1],
+                ['key2', true],
+                ['key3', { a: 1 }],
+            ];
+            const answer = {
+                key1: 1,
+                key2: true,
+                key3: { a: 1 },
+            };
+            const result = fromEntries(entries);
+
+            expect(result).to.deep.equal(answer);
+        });
+    });
+
+    describe('map()', function() {
+        it('Should call the mapping function on each [key, value] pair', function() {
+            const obj = {
+                key1: 'a',
+                key2: 1,
+                key3: { a: 1 },
+            };
+            const _entries = entries(obj);
+            const mapFn = sinon.fake.returns(['a', 1]);
+
+            map(obj, mapFn);
+
+            expect(mapFn.callCount).to.equal(_entries.length);
+            _entries.forEach(([key, val]) => {
+                mapFn.calledWithExactly(key, val);
+            });
+        });
+    });
+
+    describe('mapKeys()', function() {
+        it('Should call the mapping function on each key', function() {
+            const obj = {
+                key1: 'a',
+                key2: 1,
+                key3: { a: 1 },
+            };
+            const _keys = keys(obj);
+            const mapFn = sinon.fake.returns(['a', 1]);
+
+            mapKeys(obj, mapFn);
+
+            expect(mapFn.callCount).to.equal(_keys.length);
+            _keys.forEach(key => {
+                mapFn.calledWithExactly(key);
+            });
+        });
+    });
+
+    describe('mapValues()', function() {
+        it('Should call the mapping function on each value', function() {
+            const obj = {
+                key1: 'a',
+                key2: 1,
+                key3: { a: 1 },
+            };
+            const _values = values(obj);
+            const mapFn = sinon.fake.returns(['a', 1]);
+
+            mapValues(obj, mapFn);
+
+            expect(mapFn.callCount).to.equal(_values.length);
+            _values.forEach(value => {
+                mapFn.calledWithExactly(value);
+            });
         });
     });
 });
