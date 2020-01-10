@@ -3,15 +3,13 @@
         "browser": true,
         "commonjs": true,
         "es6": true,
+        "es2017": true,
         "node": true,
         "mocha": true
     },
     "parserOptions": {
-        "sourceType": "module",
-        "ecmaVersion": 2016,
-        "ecmaFeatures": {
-            "experimentalObjectRestSpread": true
-        }
+        "sourceType": "script",
+        "ecmaVersion": 2020
     },
     "rules": {
         "no-const-assign": "warn",
@@ -23,7 +21,6 @@
         "valid-typeof": "warn"
     },
     "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended"
+        "eslint:recommended"
     ]
 }
