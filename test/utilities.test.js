@@ -3,7 +3,7 @@
 ////////////////////////////
 const chai = require('chai');
 const sinon = require('sinon');
-const { splitStringPaths, normalizePaths, hasObjectAndPath, hasObjectPathAndValue } = require('../src/utilities');
+const { convertPathsToArray, normalizePaths, hasObjectAndPath, hasObjectPathAndValue, isValidPath } = require('../src/utilities');
 
 const expect = chai.expect;
 
@@ -11,10 +11,10 @@ const expect = chai.expect;
 // Test
 ////////////////////////////
 describe('utilities.js', function() {
-    describe('splitStringPaths()', function() {
+    describe('convertPathsToArray()', function() {
         it('Should convert a period-separated string into an array', function() {
             const params = [ 'abc', 'abc.def' ];
-            const results = params.map(splitStringPaths);
+            const results = params.map(convertPathsToArray);
             const answers = [
                 [ 'abc' ],
                 [ 'abc', 'def' ]
@@ -26,13 +26,27 @@ describe('utilities.js', function() {
             });
         });
 
+        it('Should convert numbers and symbols to one-element arrays', function() {
+            const params = [
+                1,
+                Symbol()
+            ];
+            const results = params.map(convertPathsToArray);
+            const answers = params.map(param => [ param ]);
+
+            answers.forEach((answer, idx) => {
+                const result = results[idx];
+                expect(answer).to.deep.equal(result);
+            });
+        });
+
         it('Should return any other value unchanged', function() {
             const params = [
                 [ 'abc', 'def' ],
-                1,
+                true,
                 {}
             ];
-            const results = params.map(splitStringPaths);
+            const results = params.map(convertPathsToArray);
 
             results.forEach((result, idx) => {
                 const param = params[idx];
@@ -45,7 +59,7 @@ describe('utilities.js', function() {
         it('Should only modify the second (path) parameter', function() {
             const fn = sinon.spy();
             const path = 'abc';
-            const pathArr = splitStringPaths(path);
+            const pathArr = convertPathsToArray(path);
             const params = [ {}, path, {} ];
 
             const decoratee = normalizePaths(fn);
@@ -75,7 +89,7 @@ describe('utilities.js', function() {
 
         it('Should return `undefined` if second param is not a valid path', function() {
             const secondParams = [
-                1,
+                true,
                 {}
             ];
             const decoratee = hasObjectAndPath(x => x);
@@ -104,7 +118,7 @@ describe('utilities.js', function() {
 
         it('Should return `false` if second param is not a valid path', function() {
             const secondParams = [
-                1,
+                true,
                 {}
             ];
             const decoratee = hasObjectAndPath(x => x);
@@ -119,6 +133,40 @@ describe('utilities.js', function() {
             const decoratee = hasObjectPathAndValue(x => x);
             const result = decoratee({}, 'abc');
 
+            expect(result).to.be.false;
+        });
+    });
+
+    describe('isValidPath()', function() {
+        it('Should return `true` for arrays of numbers, strings, symbols', function() {
+            const paths = [
+                [ 'abc' ],
+                [ Symbol() ],
+                [ 1 ],
+                [ 'abc', Symbol(), 1 ]
+            ];
+            const result = paths.map(isValidPath).every(x => x);
+            expect(result).to.be.true;
+        });
+
+        it('Should return `true` for numbers, strings, symbols', function() {
+            const paths = [
+                'abc',
+                'abc.def',
+                1,
+                Symbol()
+            ];
+            const result = paths.map(isValidPath).every(x => x);
+            expect(result).to.be.true;
+        });
+
+        it('Should return false for any other values', function() {
+            const paths = [
+                [ 1, true ],
+                () => {},
+                undefined
+            ];
+            const result = paths.map(isValidPath).some(x => x);
             expect(result).to.be.false;
         });
     });

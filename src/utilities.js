@@ -1,7 +1,9 @@
-const { types, isOneOf } = require('tupos');
+const { types, isOneOf, isArrayOf } = require('tupos');
 const {
     $OBJECT,
     $STRING,
+    $NUMBER,
+    $SYMBOL,
     $ARRAY,
     $INT8ARRAY,
     $UINT8ARRAY,
@@ -36,7 +38,8 @@ const isKeyed = isOneOf(
 );
 
 const areObjects = (...values) => values.every($OBJECT);
-const isValidPath = isOneOf($ARRAY, $STRING);
+
+const isValidPath = isOneOf(isArrayOf($STRING, $NUMBER, $SYMBOL), $STRING, $NUMBER, $SYMBOL);
 
 const _get = (obj, path) => {
     if (path.length === 0) return obj;
@@ -84,9 +87,19 @@ const mergeCollision = (retObj, subObj, key) => subObj[key];
 const compose = (...fns) => fns.reduce((acc, fn) => fn(acc));
 
 const exists = () => true;
-const splitStringPaths = path => $STRING(path) ? path.split('.') : path;
-const normalizePaths = normalizeParams(x => x, splitStringPaths, x => x);
+const convertPathsToArray = path => {
+    if ($STRING(path)) {
+        return path.split('.'); 
+    }
+    
+    if ($NUMBER(path) || $SYMBOL(path)) {
+        return [ path ];
+    }
+
+    return path;
+};
+const normalizePaths = normalizeParams(x => x, convertPathsToArray, x => x);
 const hasObjectAndPath = ensureParams(() => undefined, isKeyed, isValidPath);
 const hasObjectPathAndValue = ensureParams(() => false, isKeyed, isValidPath, exists);
 
-module.exports = { compose, isKeyed, areObjects, isValidPath, _get, _set, _delete, _has, mergeCollision, splitStringPaths, normalizePaths, hasObjectAndPath, hasObjectPathAndValue };
+module.exports = { compose, isKeyed, areObjects, isValidPath, _get, _set, _delete, _has, mergeCollision, convertPathsToArray, normalizePaths, hasObjectAndPath, hasObjectPathAndValue };
