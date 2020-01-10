@@ -74,7 +74,7 @@ const update = compose((obj, path, updateFn) => {
  *
  * @param {Object} obj Object to retrieve value from
  * @param {Array<string | number | symbol> | string} path Path to desired value
- * @returns {*}
+ * @returns {boolean}
  */
 const del = compose(_delete, normalizePaths, hasObjectAndPath);
 
@@ -144,7 +144,7 @@ const merge = (mainObj, subObj, onCollision = mergeCollision) => {
  *
  * @param {Object} obj Object to flatten
  * @param {string} [path=null] Path variable to track the recursive depth
- * @param {Function} [shouldTraverse=() => true] Function that checks whether a keyed object should be destructured
+ * @param {Function} [shouldTraverse=(val, key, object) => true] Function that checks whether a keyed object should be destructured
  * @returns {Object}
  */
 const destructure = (obj, path = null, shouldTraverse = () => true) => {
