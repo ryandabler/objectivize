@@ -8,6 +8,7 @@ import {
     normalizePaths,
     hasObjectAndPath,
     hasObjectPathAndValue,
+    hasObjectPathAndMaybeValue,
     isValidPath,
 } from '../src/utilities';
 
@@ -142,6 +143,42 @@ describe('utilities.js', function() {
             const paths = [[1, true], () => {}, undefined];
             const result = paths.map(isValidPath).some(x => x);
             expect(result).to.be.false;
+        });
+    });
+
+    describe('hasObjectPathAndMaybeValue()', function() {
+        it('Should return the third param is not traversable', function() {
+            const firstParams = [2, Symbol(), () => {}];
+            const thirdParam = Symbol('fallback');
+            const decoratee = hasObjectPathAndMaybeValue(x => x);
+            const results = firstParams.map(firstParam =>
+                decoratee(firstParam, 'abc', thirdParam)
+            );
+
+            results.forEach(result => {
+                expect(result).to.equal(thirdParam);
+            });
+        });
+
+        it('Should return third if second param is not a valid path', function() {
+            const secondParams = [true, {}];
+            const thirdParam = Symbol('fallback');
+            const decoratee = hasObjectPathAndMaybeValue(x => x);
+            const results = secondParams.map(secondParam =>
+                decoratee({}, secondParam, thirdParam)
+            );
+
+            results.forEach(result => {
+                expect(result).to.equal(thirdParam);
+            });
+        });
+
+        it("Should succeed if third param isn't supplied", function() {
+            const onValid = sinon.spy();
+            const decoratee = hasObjectPathAndMaybeValue(onValid);
+            decoratee({}, 'abc');
+
+            sinon.assert.calledOnce(onValid);
         });
     });
 });

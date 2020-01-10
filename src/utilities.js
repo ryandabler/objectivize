@@ -72,11 +72,11 @@ const isValidPath = isOneOf(
  * @param {Array<string | number | symbol>} path
  * @returns {any}
  */
-const _get = (obj, path) => {
+const _get = (obj, path, notFound) => {
     if (path.length === 0) return obj;
-    if (!isKeyed(obj)) return undefined;
+    if (!isKeyed(obj) || !Reflect.has(obj, path[0])) return notFound;
 
-    return _get(obj[path[0]], path.slice(1));
+    return _get(obj[path[0]], path.slice(1), notFound);
 };
 
 /**
@@ -174,6 +174,12 @@ const compose = (...fns) => fns.reduce((acc, fn) => fn(acc));
 const exists = () => true;
 
 /**
+ * A function used in `ensureParams` to allow for a position to maybe exist.
+ */
+const optional = () => true;
+optional.optional = true;
+
+/**
  * Used to normalize a valid path to be array based.
  *
  * All strings are split by periods, numbers and symbols are made into one-element
@@ -206,6 +212,23 @@ const normalizePaths = normalizeParams(
     x => x,
     convertPathsToArray,
     x => x
+);
+
+/**
+ * A decorator function to guarantee that a function receives an [ object, valid-path, value? ]
+ * argument signature.
+ *
+ * This function is to decorate `get()` which takes a fallback value as the third parameter and
+ * so if the params don't validate, will return the fallback.
+ *
+ * @param {Function}
+ * @returns {Function}
+ */
+const hasObjectPathAndMaybeValue = ensureParams(
+    (...params) => params[2],
+    isKeyed,
+    isValidPath,
+    optional
 );
 
 /**
@@ -244,4 +267,5 @@ export {
     normalizePaths,
     hasObjectAndPath,
     hasObjectPathAndValue,
+    hasObjectPathAndMaybeValue,
 };

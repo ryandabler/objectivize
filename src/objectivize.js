@@ -12,8 +12,9 @@ import {
     normalizePaths,
     hasObjectAndPath,
     hasObjectPathAndValue,
+    hasObjectPathAndMaybeValue,
 } from './utilities';
-import { keys, entries } from './prototype';
+import { entries } from './prototype';
 
 /**
  * Retrieves the value from a nested object given a path.
@@ -26,7 +27,7 @@ import { keys, entries } from './prototype';
  * @param {Array<string | number | symbol> | string} path Path to desired value
  * @returns {*}
  */
-const get = compose(_get, normalizePaths, hasObjectAndPath);
+const get = compose(_get, normalizePaths, hasObjectPathAndMaybeValue);
 
 /**
  * Set the value in a nested object given a path.

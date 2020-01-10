@@ -45,7 +45,7 @@ describe('objectivize.js', function() {
             expect(result).to.equal(obj.a.b.c[1]);
         });
 
-        it('Should return undefined for non-existent path', function() {
+        it('Should return the fallback value for non-existent path', function() {
             const obj = {
                 a: {
                     b: {
@@ -53,12 +53,13 @@ describe('objectivize.js', function() {
                     },
                 },
             };
+            const fallback = Symbol('fallback');
             const path = 'a.b.d';
-            const result = get(obj, path);
-            expect(result).to.equal(undefined);
+            const result = get(obj, path, fallback);
+            expect(result).to.equal(fallback);
         });
 
-        it('Should return undefined for bad parameters', function() {
+        it('Should return the fallback value for bad parameters', function() {
             const params = [
                 [undefined, 'a.b.c'],
                 [{ a: { b: 2 } }, 1],
