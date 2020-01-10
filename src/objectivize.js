@@ -1,7 +1,6 @@
 'use strict';
 
-const { types } = require('tupos');
-const { compose, isKeyed, areObjects, isValidPath, _get, _set, _delete, _has, mergeCollision, normalizePaths, hasObjectAndPath, hasObjectPathAndValue, hasObjectPathAndUpdater } = require('./utilities');
+const { compose, isKeyed, areObjects, _get, _set, _delete, _has, mergeCollision, normalizePaths, hasObjectAndPath, hasObjectPathAndValue } = require('./utilities');
 
 /**
  * Retrieves the value from a nested object given a path.
@@ -111,6 +110,7 @@ const generateObjectFromPath = (val, path) => {
  * @param {Object} subObj Object being merged
  * @returns {Object}
  */
+// TODO: make merging more of Object.assign
 const merge = (mainObj, subObj, onCollision = mergeCollision) => {
     let retObj = { ...mainObj };
     for (const key in subObj) {
