@@ -81,19 +81,16 @@ const has = compose(_has, normalizePaths, hasObjectAndPath);
 /**
  * Creates a nested object whose keys are the specified path, terminating at the value.
  * 
+ * This is more of a convenience function to avoid the caller having to create its own
+ * object to pass into the `set` function.
+ * 
  * @param {*} val Value to be inserted into object
- * @param {string} path Specified path to the value
+ * @param {Array<string | number | symbol> | string | number | symbol} path Specified path to the value
  * @returns {Object}
  */
 const generate = (val, path) => {
     const retObj = {};
-    let pointer = retObj;
-
-    path.split('.').forEach((_path, idx, arr) => {
-        pointer[_path] = idx === arr.length - 1 ? val : {};
-        pointer = pointer[_path];
-    });
-
+    set(retObj, path, val);
     return retObj;
 };
 
