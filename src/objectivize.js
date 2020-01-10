@@ -211,7 +211,7 @@ const equals = (obj1, obj2) => contains(obj1, obj2) && contains(obj2, obj1);
  */
 const fromEntries = entries =>
     entries.reduce((obj, [key, value]) => {
-        set(obj, key, value);
+        obj[key] = value;
         return obj;
     }, {});
 
