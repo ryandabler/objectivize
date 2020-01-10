@@ -100,7 +100,9 @@ entries.names = obj => keys.names(obj).map(key => [key, obj[key]]);
  */
 entries.symbols = obj => keys.symbols(obj).map(key => [key, obj[key]]);
 
+////////////////////////////
 // Prepare for exports
+////////////////////////////
 const __keys = Object.freeze(keys);
 const __values = Object.freeze(values);
 const __entries = Object.freeze(entries);
