@@ -89,9 +89,9 @@ describe('decorators.js', function() {
                     sinon.assert.called(dFn);
                     sinon.assert.calledWith(dFn, 2);
                     sinon.assert.neverCalledWith(dFn, 1);
-                })
-            })
-        })
+                });
+            });
+        });
     });
 
     describe('ensureParams()', function() {
@@ -160,8 +160,8 @@ describe('decorators.js', function() {
 
                     sinon.assert.notCalled(onInvalid);
                     sinon.assert.calledWith(decoratee, param);
-                })
-            })
-        })
+                });
+            });
+        });
     });
 });
