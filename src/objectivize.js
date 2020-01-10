@@ -95,7 +95,7 @@ const generateObjectFromPath = (val, path) => {
     });
 
     return retObj;
-}
+};
 
 /**
  * Merges an object of arbitrary depth into another object.
@@ -123,7 +123,7 @@ const merge = (mainObj, subObj, onCollision = mergeCollision) => {
     }
 
     return retObj;
-}
+};
 
 /**
  * Traverses an object and flattens it.
@@ -153,7 +153,7 @@ const destructure = (obj, path = null, shouldTraverse = () => true) => {
     });
 
     return retObj;
-}
+};
 
 /**
  * Checks if one object contains another.
@@ -172,7 +172,7 @@ const contains = (obj, maybeSubset) => {
     const subsetKeys = Object.keys(maybeSubset);
     
     return subsetKeys.every( key => key in obj && contains(obj[key], maybeSubset[key]) ) || objKeys.some( key => contains(obj[key], maybeSubset) );
-}
+};
 
 /**
  * Checks if to object are deeply equal.

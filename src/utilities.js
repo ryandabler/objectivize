@@ -77,7 +77,7 @@ const _has = (obj, path) => {
     }
 
     return _has(obj[path[0]], path.slice(1));
-}
+};
 
 const mergeCollision = (retObj, subObj, key) => subObj[key];
 

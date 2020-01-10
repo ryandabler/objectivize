@@ -3,10 +3,7 @@
 ////////////////////////////
 const chai = require('chai');
 const sinon = require('sinon');
-const { types } = require('tupos');
 const { splitStringPaths, normalizePaths, hasObjectAndPath, hasObjectPathAndValue } = require('../src/utilities');
-
-const { $FUNCTION } = types;
 
 const expect = chai.expect;
 
@@ -73,7 +70,7 @@ describe('utilities.js', function() {
 
             results.forEach(result => {
                 expect(result).to.be.undefined;
-            })
+            });
         });
 
         it('Should return `undefined` if second param is not a valid path', function() {
@@ -102,7 +99,7 @@ describe('utilities.js', function() {
 
             results.forEach(result => {
                 expect(result).to.be.undefined;
-            })
+            });
         });
 
         it('Should return `false` if second param is not a valid path', function() {

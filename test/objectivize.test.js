@@ -293,7 +293,7 @@ describe('objectivize.js', function() {
                 b: {
                     c: objectRef
                 }
-            }
+            };
 
             const result = merge(mainObj, subObj);
             expect(result.b.c).to.equal(objectRef);
@@ -324,7 +324,7 @@ describe('objectivize.js', function() {
                     expect(path).to.equal(originalPath);
                     expect(val).to.equal(originalVal);
                 }
-            )
+            );
         });
 
         it('Should account for a custom traversal', function() {
@@ -351,7 +351,7 @@ describe('objectivize.js', function() {
                     expect(path).to.equal(originalPath);
                     expect(val).to.equal(originalVal);
                 }
-            )
+            );
         });
     });
 

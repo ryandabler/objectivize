@@ -104,4 +104,4 @@ module.exports = {
     keys: Object.freeze(keys),
     values: Object.freeze(values),
     entries: Object.freeze(entries)
-}
+};
