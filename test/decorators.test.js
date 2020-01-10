@@ -1,14 +1,12 @@
 ////////////////////////////
 // Initialize
 ////////////////////////////
-const chai = require('chai');
-const sinon = require('sinon');
-const { types } = require('tupos');
-const { normalizeParams, ensureParams } = require('../src/decorators');
+import { expect } from 'chai';
+import sinon from 'sinon';
+import { types } from 'tupos';
+import { normalizeParams, ensureParams } from '../src/decorators';
 
 const { $FUNCTION } = types;
-
-const expect = chai.expect;
 
 ////////////////////////////
 // Test

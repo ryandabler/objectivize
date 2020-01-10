@@ -1,6 +1,6 @@
 'use strict';
 
-const { compose, isKeyed, areObjects, _get, _set, _delete, _has, mergeCollision, normalizePaths, hasObjectAndPath, hasObjectPathAndValue } = require('./utilities');
+import { compose, isKeyed, areObjects, _get, _set, _delete, _has, mergeCollision, normalizePaths, hasObjectAndPath, hasObjectPathAndValue } from './utilities';
 
 /**
  * Retrieves the value from a nested object given a path.
@@ -186,7 +186,7 @@ const contains = (obj, maybeSubset) => {
  */
 const equals = (obj1, obj2) => contains(obj1, obj2) && contains(obj2, obj1);
 
-module.exports = {
+export {
     get,
     set,
     update,

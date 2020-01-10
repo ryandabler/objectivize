@@ -8,7 +8,7 @@
         "mocha": true
     },
     "parserOptions": {
-        "sourceType": "script",
+        "sourceType": "module",
         "ecmaVersion": 2020
     },
     "rules": {

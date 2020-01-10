@@ -1,13 +1,11 @@
 ////////////////////////////
 // Initialize
 ////////////////////////////
-const chai = require('chai');
-const { types } = require('tupos');
-const { keys, values, entries } = require('../src/prototype');
+import { expect } from 'chai';
+import { types } from 'tupos';
+import { keys, values, entries } from '../src/prototype';
 
 const { $STRING, $SYMBOL } = types;
-
-const expect = chai.expect;
 
 ////////////////////////////
 // Test

@@ -4,7 +4,7 @@
   "description": "An object-manipulation utility library",
   "main": "lib/index.js",
   "scripts": {
-    "test": "mocha --exit",
+    "test": "mocha --require esm --exit",
     "compile": "cross-env NODE_ENV=production babel -d lib/ src/",
     "coverage": "cross-env NODE_ENV=test nyc mocha",
     "prepublish": "npm run compile"
@@ -30,6 +30,7 @@
     "chai": "^4.2.0",
     "coveralls": "^3.0.6",
     "cross-env": "^5.2.1",
+    "esm": "^3.2.25",
     "mocha": "^5.2.0",
     "nyc": "^15.0.0",
     "sinon": "^8.0.4"

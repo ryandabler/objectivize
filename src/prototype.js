@@ -100,8 +100,13 @@ entries.names = obj => keys.names(obj).map(key => [ key, obj[key] ]);
  */
 entries.symbols = obj => keys.symbols(obj).map(key => [ key, obj[key] ]);
 
-module.exports = {
-    keys: Object.freeze(keys),
-    values: Object.freeze(values),
-    entries: Object.freeze(entries)
+// Prepare for exports
+const __keys = Object.freeze(keys);
+const __values = Object.freeze(values);
+const __entries = Object.freeze(entries);
+
+export {
+    __keys as keys,
+    __values as values,
+    __entries as entries
 };

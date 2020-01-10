@@ -1,4 +1,4 @@
-const {
+import {
     get,
     set,
     update,
@@ -9,10 +9,10 @@ const {
     destructure,
     contains,
     equals,
-} = require('./objectivize');
-const { keys, values, entries } = require('./prototype');
+} from './objectivize';
+import { keys, values, entries } from './prototype';
 
-module.exports = {
+export {
     get,
     set,
     update,

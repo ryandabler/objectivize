@@ -38,4 +38,4 @@ const ensureParams = (onInvalid, ...ensurerFns) => fn =>
         return isValid ? fn.call(this, ...params) : onInvalid(...params);
     };
 
-module.exports = { normalizeParams, ensureParams };
+export { normalizeParams, ensureParams };

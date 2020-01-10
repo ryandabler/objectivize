@@ -1,4 +1,6 @@
-const { types, isOneOf, isArrayOf } = require('tupos');
+import  { types, isOneOf, isArrayOf }  from 'tupos';
+import { normalizeParams, ensureParams } from './decorators';
+
 const {
     $OBJECT,
     $STRING,
@@ -15,7 +17,6 @@ const {
     $FLOAT32ARRAY,
     $FLOAT64ARRAY
 } = types;
-const { normalizeParams, ensureParams } = require('./decorators');
 
 /**
 * Checks if an item has a type specified in the list.
@@ -215,4 +216,4 @@ const hasObjectAndPath = ensureParams(() => undefined, isKeyed, isValidPath);
  */
 const hasObjectPathAndValue = ensureParams(() => false, isKeyed, isValidPath, exists);
 
-module.exports = { compose, isKeyed, areObjects, isValidPath, _get, _set, _delete, _has, mergeCollision, convertPathsToArray, normalizePaths, hasObjectAndPath, hasObjectPathAndValue };
+export { compose, isKeyed, areObjects, isValidPath, _get, _set, _delete, _has, mergeCollision, convertPathsToArray, normalizePaths, hasObjectAndPath, hasObjectPathAndValue };

@@ -1,11 +1,9 @@
 ////////////////////////////
 // Initialize
 ////////////////////////////
-const chai = require('chai');
-const sinon = require('sinon');
-const { convertPathsToArray, normalizePaths, hasObjectAndPath, hasObjectPathAndValue, isValidPath } = require('../src/utilities');
-
-const expect = chai.expect;
+import { expect } from 'chai';
+import sinon from 'sinon';
+import { convertPathsToArray, normalizePaths, hasObjectAndPath, hasObjectPathAndValue, isValidPath } from '../src/utilities';
 
 ////////////////////////////
 // Test

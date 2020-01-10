@@ -1,9 +1,9 @@
 ////////////////////////////
 // Initialize
 ////////////////////////////
-const chai  = require('chai');
-const { types } = require('tupos');
-const {
+import { expect } from 'chai';
+import { types } from 'tupos';
+import {
     get,
     set,
     update,
@@ -14,11 +14,10 @@ const {
     destructure,
     contains,
     equals,
-} = require('../src/objectivize');
-const { keys } = require('../src/prototype');
-const { $ARRAY } = types;
+} from '../src/objectivize';
+import { keys } from '../src/prototype';
 
-const expect = chai.expect;
+const { $ARRAY } = types;
 
 ////////////////////////////
 // Test
