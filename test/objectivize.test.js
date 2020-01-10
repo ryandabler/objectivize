@@ -28,9 +28,9 @@ describe('objectivize.js', function() {
             const obj = {
                 a: {
                     b: {
-                        c: [ 1, 2, 3 ]
-                    }
-                }
+                        c: [1, 2, 3],
+                    },
+                },
             };
             const path = 'a.b.c.1';
             const result = get(obj, path);
@@ -41,9 +41,9 @@ describe('objectivize.js', function() {
             const obj = {
                 a: {
                     b: {
-                        c: [ 1, 2, 3 ]
-                    }
-                }
+                        c: [1, 2, 3],
+                    },
+                },
             };
             const path = 'a.b.d';
             const result = get(obj, path);
@@ -52,8 +52,8 @@ describe('objectivize.js', function() {
 
         it('Should return undefined for bad parameters', function() {
             const params = [
-                [ undefined, 'a.b.c' ],
-                [ { a: { b: 2 } }, 1 ]
+                [undefined, 'a.b.c'],
+                [{ a: { b: 2 } }, 1],
             ];
             const results = params.map(_params => get(..._params));
             expect(results.every(result => result === undefined)).to.be.true;
@@ -65,9 +65,9 @@ describe('objectivize.js', function() {
             const obj = {
                 a: {
                     b: {
-                        c: [ 1, 2, 3 ]
-                    }
-                }
+                        c: [1, 2, 3],
+                    },
+                },
             };
             const path = 'a.b.c';
             const setValue = 1;
@@ -83,9 +83,9 @@ describe('objectivize.js', function() {
             const obj = {
                 a: {
                     b: {
-                        c: 1
-                    }
-                }
+                        c: 1,
+                    },
+                },
             };
             const path = 'a.b.d.e';
             const setValue = 2;
@@ -101,10 +101,10 @@ describe('objectivize.js', function() {
             const obj = {
                 a: {
                     b: {
-                        c: 1
+                        c: 1,
                     },
-                    d: 3
-                }
+                    d: 3,
+                },
             };
             const path = 'a.d.e';
             const setValue = 3;
@@ -123,9 +123,9 @@ describe('objectivize.js', function() {
             const obj = {
                 a: {
                     b: {
-                        c: [ 1, 2, 3 ]
-                    }
-                }
+                        c: [1, 2, 3],
+                    },
+                },
             };
             const path = 'a.b.c';
             const result = update(obj, path, updateFn);
@@ -135,14 +135,14 @@ describe('objectivize.js', function() {
             expect(result).to.be.true;
         });
 
-        it('Should return false if update couldn\'t happen', function() {
+        it("Should return false if update couldn't happen", function() {
             const updateFn = num => num + 1;
             const obj = {
                 a: {
                     b: {
-                        c: 1
-                    }
-                }
+                        c: 1,
+                    },
+                },
             };
             const path = 'a.b.d.e';
             const result = update(obj, path, updateFn);
@@ -159,9 +159,9 @@ describe('objectivize.js', function() {
             const obj = {
                 a: {
                     b: {
-                        c: [ 1, 2, 3 ]
-                    }
-                }
+                        c: [1, 2, 3],
+                    },
+                },
             };
             const path = 'a.b.c';
             const result = del(obj, path);
@@ -170,13 +170,13 @@ describe('objectivize.js', function() {
             expect(result).to.be.true;
         });
 
-        it('Should return false if delete couldn\'t happen', function() {
+        it("Should return false if delete couldn't happen", function() {
             const obj = {
                 a: {
                     b: {
-                        c: 1
-                    }
-                }
+                        c: 1,
+                    },
+                },
             };
             const path = 'a.b.d.e';
             const result = del(obj, path);
@@ -193,9 +193,9 @@ describe('objectivize.js', function() {
             const obj = {
                 a: {
                     b: {
-                        c: [ 1, 2, 3 ]
-                    }
-                }
+                        c: [1, 2, 3],
+                    },
+                },
             };
             const path = 'a.b.c.1';
             const result = has(obj, path);
@@ -203,13 +203,13 @@ describe('objectivize.js', function() {
             expect(result).to.be.true;
         });
 
-        it('Should return false if path doesn\'t exist', function() {
+        it("Should return false if path doesn't exist", function() {
             const obj = {
                 a: {
                     b: {
-                        c: 1
-                    }
-                }
+                        c: 1,
+                    },
+                },
             };
             const path = 'a.b.d.e';
             const result = has(obj, path);
@@ -236,18 +236,18 @@ describe('objectivize.js', function() {
                 a: 1,
                 b: 2,
                 e: {
-                    f: 1
-                }
+                    f: 1,
+                },
             };
 
             const subObject = {
                 c: 3,
                 d: {
-                    e: 'abc'
+                    e: 'abc',
                 },
                 e: {
-                    g: 2
-                }
+                    g: 2,
+                },
             };
 
             const result = merge(mainObj, subObject);
@@ -257,14 +257,14 @@ describe('objectivize.js', function() {
             expect(Object.keys(resultPaths).length).to.equal(6);
         });
 
-        it('Should override first object\'s value with merged objects on key collision', function() {
+        it("Should override first object's value with merged objects on key collision", function() {
             const mainObj = {
                 a: 1,
-                b: 2
+                b: 2,
             };
 
             const subObject = {
-                b: 3
+                b: 3,
             };
 
             const finalObject = {
@@ -279,19 +279,19 @@ describe('objectivize.js', function() {
 
         it('Should shallow merge objects', function() {
             const objectRef = {
-                a: 1
+                a: 1,
             };
 
             const mainObj = {
                 b: {
-                    d: 1
-                }
+                    d: 1,
+                },
             };
 
             const subObj = {
                 b: {
-                    c: objectRef
-                }
+                    c: objectRef,
+                },
             };
 
             const result = merge(mainObj, subObj);
@@ -302,55 +302,49 @@ describe('objectivize.js', function() {
     describe('destructure()', function() {
         it('Should decompose an object into its component paths', function() {
             const paths = [
-                [ 'a.b.c', 'path 1' ],
-                [ 'a.b.d', true ],
-                [ 'a.c.e.f.0', {} ]
+                ['a.b.c', 'path 1'],
+                ['a.b.d', true],
+                ['a.c.e.f.0', {}],
             ];
-            const object = paths.reduce(
-                (obj, [ path, val ]) => {
-                    set(obj, path, val);
-                    return obj;
-                },
-                {}
-            );
-            
+            const object = paths.reduce((obj, [path, val]) => {
+                set(obj, path, val);
+                return obj;
+            }, {});
+
             const result = destructure(object);
             const resultPaths = Object.entries(result);
             expect(resultPaths.length).to.equal(paths.length);
-            resultPaths.forEach(
-                ([ path, val ]) => {
-                    const [ originalPath, originalVal ] = paths.find( ([ _path ]) => _path === path);
-                    expect(path).to.equal(originalPath);
-                    expect(val).to.equal(originalVal);
-                }
-            );
+            resultPaths.forEach(([path, val]) => {
+                const [originalPath, originalVal] = paths.find(
+                    ([_path]) => _path === path
+                );
+                expect(path).to.equal(originalPath);
+                expect(val).to.equal(originalVal);
+            });
         });
 
         it('Should account for a custom traversal', function() {
             const shouldTraverse = val => !$ARRAY(val);
             const paths = [
-                [ 'a.b.c', [ 'path 1', 'path 2', 'path 3' ] ],
-                [ 'a.b.d', true ],
-                [ 'a.c.e.f.0', {} ]
+                ['a.b.c', ['path 1', 'path 2', 'path 3']],
+                ['a.b.d', true],
+                ['a.c.e.f.0', {}],
             ];
-            const object = paths.reduce(
-                (obj, [ path, val ]) => {
-                    set(obj, path, val);
-                    return obj;
-                },
-                {}
-            );
-            
+            const object = paths.reduce((obj, [path, val]) => {
+                set(obj, path, val);
+                return obj;
+            }, {});
+
             const result = destructure(object, null, shouldTraverse);
             const resultPaths = Object.entries(result);
             expect(resultPaths.length).to.equal(paths.length);
-            resultPaths.forEach(
-                ([ path, val ]) => {
-                    const [ originalPath, originalVal ] = paths.find( ([ _path ]) => _path === path);
-                    expect(path).to.equal(originalPath);
-                    expect(val).to.equal(originalVal);
-                }
-            );
+            resultPaths.forEach(([path, val]) => {
+                const [originalPath, originalVal] = paths.find(
+                    ([_path]) => _path === path
+                );
+                expect(path).to.equal(originalPath);
+                expect(val).to.equal(originalVal);
+            });
         });
     });
 
@@ -359,15 +353,15 @@ describe('objectivize.js', function() {
             const objects = [
                 [
                     { a: 1, b: { c: 2, d: 3 } },
-                    { a: 1, b: { d: 3 } }
+                    { a: 1, b: { d: 3 } },
                 ],
                 [
                     { a: 1, b: { a: 1, b: { c: 2, d: 3 } } },
-                    { a: 1, b: { c: 2 } }
-                ]
+                    { a: 1, b: { c: 2 } },
+                ],
             ];
-            const results = objects.map(
-                ( [ obj, subObj ]) => contains(obj, subObj)
+            const results = objects.map(([obj, subObj]) =>
+                contains(obj, subObj)
             );
 
             expect(results.every(result => result)).to.be.true;
@@ -377,15 +371,15 @@ describe('objectivize.js', function() {
             const objects = [
                 [
                     { a: 1, b: { c: 2, d: 3 } },
-                    { a: 1, b: { d: 4 } }
+                    { a: 1, b: { d: 4 } },
                 ],
                 [
                     { a: 1, b: { a: 1, b: { c: 2, d: 3 } } },
-                    { a: 1, b: { c: { d: 3 } } }
-                ]
+                    { a: 1, b: { c: { d: 3 } } },
+                ],
             ];
-            const results = objects.map(
-                ( [ obj, subObj ]) => contains(obj, subObj)
+            const results = objects.map(([obj, subObj]) =>
+                contains(obj, subObj)
             );
 
             expect(results.some(result => result)).to.be.false;
@@ -397,16 +391,14 @@ describe('objectivize.js', function() {
             const objects = [
                 [
                     { a: 1, b: { c: 2, d: 3 } },
-                    { a: 1, b: { c: 2, d: 3 } }
+                    { a: 1, b: { c: 2, d: 3 } },
                 ],
                 [
                     { a: 1, b: { a: 1, b: { c: 2, d: 3 } } },
-                    { a: 1, b: { a: 1, b: { c: 2, d: 3 } } }
-                ]
+                    { a: 1, b: { a: 1, b: { c: 2, d: 3 } } },
+                ],
             ];
-            const results = objects.map(
-                ( [ obj, subObj ]) => equals(obj, subObj)
-            );
+            const results = objects.map(([obj, subObj]) => equals(obj, subObj));
 
             expect(results.every(result => result)).to.be.true;
         });
@@ -415,16 +407,14 @@ describe('objectivize.js', function() {
             const objects = [
                 [
                     { a: 1, b: { c: 2, d: 3 } },
-                    { a: 1, b: { d: 4 } }
+                    { a: 1, b: { d: 4 } },
                 ],
                 [
                     { a: 1, b: { a: 1, b: { c: 2, d: 3 } } },
-                    { a: 1, b: { a: 1, b: { c: 2, d: 4 } } }
-                ]
+                    { a: 1, b: { a: 1, b: { c: 2, d: 4 } } },
+                ],
             ];
-            const results = objects.map(
-                ( [ obj, subObj ]) => equals(obj, subObj)
-            );
+            const results = objects.map(([obj, subObj]) => equals(obj, subObj));
 
             expect(results.some(result => result)).to.be.false;
         });

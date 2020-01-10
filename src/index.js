@@ -25,5 +25,5 @@ export {
     equals,
     keys,
     values,
-    entries
+    entries,
 };
