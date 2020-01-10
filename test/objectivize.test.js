@@ -258,7 +258,7 @@ describe('objectivize.js', function() {
             expect(Object.keys(resultPaths).length).to.equal(6);
         });
 
-        it('Should combine keys into an array when colliding', function() {
+        it('Should override first object\'s value with merged objects on key collision', function() {
             const mainObj = {
                 a: 1,
                 b: 2
@@ -270,29 +270,12 @@ describe('objectivize.js', function() {
 
             const finalObject = {
                 a: 1,
-                b: [ 2, 3 ]
+                b: 3,
             };
 
             const result = merge(mainObj, subObject);
 
             expect(contains(result, finalObject)).to.be.true;
-        });
-
-        it('Should concat merged property if main property is an array', function() {
-            const mainObj = {
-                a: 1,
-                b: [ 2, 4 ]
-            };
-
-            const subObject = {
-                b: 3
-            };
-
-            const result = merge(mainObj, subObject);
-            const resultPaths = destructure(result);
-
-            expect(Object.keys(resultPaths).length).to.equal(4);
-            expect(get(result, 'b.2')).to.equal(subObject.b);
         });
 
         it('Should shallow merge objects', function() {

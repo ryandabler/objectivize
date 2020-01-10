@@ -79,14 +79,7 @@ const _has = (obj, path) => {
     return _has(obj[path[0]], path.slice(1));
 }
 
-const mergeCollision = (retObj, subObj, key) => {
-    if ($ARRAY(retObj[key])) {
-        return retObj[key].concat(subObj[key]);
-    }
-
-    retObj[key] = [ retObj[key], subObj[key] ];
-    return retObj[key];
-};
+const mergeCollision = (retObj, subObj, key) => subObj[key];
 
 const compose = (...fns) => fns.reduce((acc, fn) => fn(acc));
 

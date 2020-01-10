@@ -110,7 +110,6 @@ const generateObjectFromPath = (val, path) => {
  * @param {Object} subObj Object being merged
  * @returns {Object}
  */
-// TODO: make merging more of Object.assign
 const merge = (mainObj, subObj, onCollision = mergeCollision) => {
     let retObj = { ...mainObj };
     for (const key in subObj) {
