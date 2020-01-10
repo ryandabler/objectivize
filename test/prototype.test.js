@@ -70,7 +70,7 @@ describe('keys(), values(), entries()', function() {
     describe('values()', function() {
         it('Should return values for all enumerable and non-enumerable properties', function() {
             const result = values(obj);
-            const _values = descriptors.map(([, descriptor]) => descriptor.value)
+            const _values = descriptors.map(([, descriptor]) => descriptor.value);
             expect(result.length).to.equal(descriptors.length);
             expect(result).to.have.members(_values);
         });
@@ -106,7 +106,7 @@ describe('keys(), values(), entries()', function() {
     describe('entries()', function() {
         it('Should return entries for all enumerable and non-enumerable properties', function() {
             const result = entries(obj);
-            const _entries = descriptors.map(([ key, descriptor ]) => [ key, descriptor.value ])
+            const _entries = descriptors.map(([ key, descriptor ]) => [ key, descriptor.value ]);
             expect(result.length).to.equal(descriptors.length);
             expect(result).to.have.deep.members(_entries);
         });
