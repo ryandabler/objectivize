@@ -3,6 +3,10 @@ coverage
 node_modules
 src
 test
-.eslintrc.json
+.babelrc
+.eslintrc
 .gitignore
+.nycrc
+.prettierrc
 .travis.yml
+rollup.config.js
