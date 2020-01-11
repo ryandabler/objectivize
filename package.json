@@ -1,85 +1,86 @@
 {
-  "name": "objectivize",
-  "version": "1.1.0",
-  "description": "An object-manipulation utility library",
-  "main": "lib/index.js",
-  "scripts": {
-    "test": "mocha --require esm --exit",
-    "compile": "cross-env NODE_ENV=production babel -d lib/ src/",
-    "coverage": "cross-env NODE_ENV=test nyc mocha",
-    "prepublish": "npm run compile"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ryandabler/objectivize.git"
-  },
-  "author": "Ryan Dabler <r.p.dabler@gmail.com> (https://ryandabler.github.io)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ryandabler/objectivize/issues"
-  },
-  "homepage": "https://github.com/ryandabler/objectivize#readme",
-  "devDependencies": {
-    "@babel/cli": "^7.6.2",
-    "@babel/core": "^7.6.2",
-    "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
-    "@babel/preset-env": "^7.6.2",
-    "@babel/register": "^7.6.2",
-    "babel-plugin-istanbul": "^5.2.0",
-    "babel-preset-minify": "^0.5.1",
-    "chai": "^4.2.0",
-    "coveralls": "^3.0.6",
-    "cross-env": "^5.2.1",
-    "esm": "^3.2.25",
-    "mocha": "^5.2.0",
-    "nyc": "^15.0.0",
-    "sinon": "^8.0.4"
-  },
-  "dependencies": {
-    "tupos": "^2.0.0"
-  },
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "targets": {
-            "node": "current"
-          }
-        }
-      ]
-    ],
-    "env": {
-      "test": {
-        "plugins": [
-          "istanbul"
-        ]
-      },
-      "production": {
-        "plugins": [
-          "@babel/plugin-proposal-object-rest-spread"
-        ],
+    "name": "objectivize",
+    "version": "1.1.0",
+    "description": "An object-manipulation utility library",
+    "main": "lib/index.js",
+    "scripts": {
+        "test": "mocha --require esm --exit",
+        "compile": "./node_modules/.bin/rollup -c",
+        "coverage": "cross-env NODE_ENV=test nyc mocha",
+        "prepublish": "npm run compile"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ryandabler/objectivize.git"
+    },
+    "author": "Ryan Dabler <r.p.dabler@gmail.com> (https://ryandabler.github.io)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/ryandabler/objectivize/issues"
+    },
+    "homepage": "https://github.com/ryandabler/objectivize#readme",
+    "devDependencies": {
+        "@babel/cli": "^7.6.2",
+        "@babel/core": "^7.6.2",
+        "@babel/preset-env": "^7.6.2",
+        "@babel/register": "^7.6.2",
+        "@rollup/plugin-node-resolve": "^7.0.0",
+        "babel-plugin-istanbul": "^5.2.0",
+        "chai": "^4.2.0",
+        "coveralls": "^3.0.6",
+        "cross-env": "^5.2.1",
+        "esm": "^3.2.25",
+        "mocha": "^5.2.0",
+        "nyc": "^15.0.0",
+        "rollup": "^1.29.0",
+        "rollup-plugin-terser": "^5.2.0",
+        "sinon": "^8.0.4"
+    },
+    "dependencies": {
+        "tupos": "^2.0.0"
+    },
+    "babel": {
         "presets": [
-          "minify"
+            [
+                "@babel/preset-env",
+                {
+                    "targets": {
+                        "node": "current"
+                    }
+                }
+            ]
+        ],
+        "env": {
+            "test": {
+                "plugins": [
+                    "istanbul"
+                ]
+            },
+            "production": {
+                "plugins": [
+                    "@babel/plugin-proposal-object-rest-spread"
+                ],
+                "presets": [
+                    "minify"
+                ]
+            }
+        }
+    },
+    "nyc": {
+        "check-coverage": true,
+        "per-file": true,
+        "lines": 100,
+        "statements": 100,
+        "functions": 100,
+        "branches": 100,
+        "require": [
+            "@babel/register"
+        ],
+        "sourceMap": false,
+        "instrument": false,
+        "reporter": [
+            "text",
+            "lcov"
         ]
-      }
     }
-  },
-  "nyc": {
-    "check-coverage": true,
-    "per-file": true,
-    "lines": 100,
-    "statements": 100,
-    "functions": 100,
-    "branches": 100,
-    "require": [
-      "@babel/register"
-    ],
-    "sourceMap": false,
-    "instrument": false,
-    "reporter": [
-      "text",
-      "lcov"
-    ]
-  }
 }
