@@ -212,7 +212,7 @@ const fromEntries = entries =>
  * The mapping function must have the following signature in order
  * for the mapped entries to be reassembled:
  * ```
- * (string, any) => [string, any]
+ * (string, any, Object) => [string, any]
  * ```
  *
  * @param {Object} obj
@@ -220,7 +220,9 @@ const fromEntries = entries =>
  * @returns {Object}
  */
 const map = (obj, mapFn) => {
-    const mappedEntries = entries(obj).map(([key, value]) => mapFn(key, value));
+    const mappedEntries = entries(obj).map(([key, value]) =>
+        mapFn(key, value, obj)
+    );
     return fromEntries(mappedEntries);
 };
 
@@ -232,7 +234,9 @@ const map = (obj, mapFn) => {
  * @returns {Object}
  */
 const mapKeys = (obj, mapFn) =>
-    fromEntries(entries(obj).map(([key, value]) => [mapFn(key), value]));
+    fromEntries(
+        entries(obj).map(([key, value]) => [mapFn(key, value, obj), value])
+    );
 
 /**
  * Takes an object and modifies the values according to the specified mapping function.
@@ -242,7 +246,9 @@ const mapKeys = (obj, mapFn) =>
  * @returns {Object}
  */
 const mapValues = (obj, mapFn) =>
-    fromEntries(entries(obj).map(([key, value]) => [key, mapFn(value)]));
+    fromEntries(
+        entries(obj).map(([key, value]) => [key, mapFn(value, key, obj)])
+    );
 
 /**
  * Looks for and returns (if found) the first entry for the object whose

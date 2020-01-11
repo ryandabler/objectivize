@@ -459,7 +459,7 @@ describe('objectivize.js', function() {
             expect($OBJECT(mappedObj)).to.be.true;
         });
 
-        it('Should call the mapping function on each [key, value] pair', function() {
+        it('Should call the mapping function on each [key, value, obj] tuple', function() {
             const obj = {
                 key1: 'a',
                 key2: 1,
@@ -472,7 +472,7 @@ describe('objectivize.js', function() {
 
             expect(mapFn.callCount).to.equal(_entries.length);
             _entries.forEach(([key, val]) => {
-                expect(mapFn.calledWithExactly(key, val)).to.be.true;
+                expect(mapFn.calledWithExactly(key, val, obj)).to.be.true;
             });
         });
     });
@@ -497,14 +497,14 @@ describe('objectivize.js', function() {
                 key2: 1,
                 key3: { a: 1 },
             };
-            const _keys = keys(obj);
+            const _entries = entries(obj);
             const mapFn = sinon.fake.returns(['a', 1]);
 
             mapKeys(obj, mapFn);
 
-            expect(mapFn.callCount).to.equal(_keys.length);
-            _keys.forEach(key => {
-                expect(mapFn.calledWithExactly(key)).to.be.true;
+            expect(mapFn.callCount).to.equal(_entries.length);
+            _entries.forEach(([key, value]) => {
+                expect(mapFn.calledWithExactly(key, value, obj)).to.be.true;
             });
         });
     });
@@ -529,14 +529,14 @@ describe('objectivize.js', function() {
                 key2: 1,
                 key3: { a: 1 },
             };
-            const _values = values(obj);
+            const _entries = entries(obj);
             const mapFn = sinon.fake.returns(['a', 1]);
 
             mapValues(obj, mapFn);
 
-            expect(mapFn.callCount).to.equal(_values.length);
-            _values.forEach(value => {
-                expect(mapFn.calledWithExactly(value)).to.be.true;
+            expect(mapFn.callCount).to.equal(_entries.length);
+            _entries.forEach(([key, value]) => {
+                expect(mapFn.calledWithExactly(value, key, obj)).to.be.true;
             });
         });
     });
