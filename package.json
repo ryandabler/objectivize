@@ -38,49 +38,5 @@
     },
     "dependencies": {
         "tupos": "^2.0.0"
-    },
-    "babel": {
-        "presets": [
-            [
-                "@babel/preset-env",
-                {
-                    "targets": {
-                        "node": "current"
-                    }
-                }
-            ]
-        ],
-        "env": {
-            "test": {
-                "plugins": [
-                    "istanbul"
-                ]
-            },
-            "production": {
-                "plugins": [
-                    "@babel/plugin-proposal-object-rest-spread"
-                ],
-                "presets": [
-                    "minify"
-                ]
-            }
-        }
-    },
-    "nyc": {
-        "check-coverage": true,
-        "per-file": true,
-        "lines": 100,
-        "statements": 100,
-        "functions": 100,
-        "branches": 100,
-        "require": [
-            "@babel/register"
-        ],
-        "sourceMap": false,
-        "instrument": false,
-        "reporter": [
-            "text",
-            "lcov"
-        ]
     }
 }
