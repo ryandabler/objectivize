@@ -13,6 +13,7 @@ import {
     hasObjectAndPath,
     hasObjectPathAndValue,
     hasObjectPathAndMaybeValue,
+    generateFlatPathsDown,
 } from './utilities';
 import { entries } from './prototype';
 
@@ -143,29 +144,19 @@ const merge = (mainObj, subObj, onCollision = mergeCollision) => {
  * gets added to a new object as key, with the indicated value as the value.
  *
  * @param {Object} obj Object to flatten
- * @param {string} [path=null] Path variable to track the recursive depth
  * @param {Function} [shouldTraverse=(val, key, object) => true] Function that checks whether a keyed object should be destructured
  * @returns {Object}
  */
-const destructure = (obj, path = null, shouldTraverse = () => true) => {
-    let retObj = {};
-    const entries = Object.entries(obj);
+const destructure = (obj, shouldTraverse = () => true) => {
+    const flatPaths = generateFlatPathsDown(obj, shouldTraverse).map(
+        flattened => {
+            const path = flattened.slice(0, -1).join('.');
+            const value = flattened[flattened.length - 1];
+            return [path, value];
+        }
+    );
 
-    entries.forEach(entry => {
-        const [key, val] = entry;
-        const currentPath = path ? path + '.' + key : key;
-        const subEntries =
-            isKeyed(val) &&
-            Object.keys(val).length > 0 &&
-            shouldTraverse(val, key, obj)
-                ? destructure(val, currentPath, shouldTraverse)
-                : null;
-        retObj = subEntries
-            ? { ...retObj, ...subEntries }
-            : { ...retObj, [currentPath]: val };
-    });
-
-    return retObj;
+    return fromEntries(flatPaths);
 };
 
 /**

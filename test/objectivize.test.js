@@ -344,7 +344,7 @@ describe('objectivize.js', function() {
                 return obj;
             }, {});
 
-            const result = destructure(object, null, shouldTraverse);
+            const result = destructure(object, shouldTraverse);
             const resultPaths = Object.entries(result);
             expect(resultPaths.length).to.equal(paths.length);
             resultPaths.forEach(([path, val]) => {

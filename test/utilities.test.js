@@ -10,6 +10,7 @@ import {
     hasObjectPathAndValue,
     hasObjectPathAndMaybeValue,
     isValidPath,
+    generateFlatPathsDown,
 } from '../src/utilities';
 
 ////////////////////////////
@@ -179,6 +180,50 @@ describe('utilities.js', function() {
             decoratee({}, 'abc');
 
             sinon.assert.calledOnce(onValid);
+        });
+    });
+
+    describe('generateFlatPathsDown()', function() {
+        it('Should call `shouldTraverse` to decide to recurse', function() {
+            const obj = {
+                a: {
+                    b: {
+                        c: 1,
+                        d: 2,
+                    },
+                },
+            };
+            const shouldTraverse = sinon.fake.returns(true);
+            generateFlatPathsDown(obj, shouldTraverse);
+
+            const calls = [
+                [obj.a, 'a', obj],
+                [obj.b, 'b', obj],
+            ];
+
+            expect(shouldTraverse.callCount).to.equal(calls.length);
+            calls.forEach(call => {
+                shouldTraverse.calledWith(...call);
+            });
+        });
+
+        it('Should generate flat paths', function() {
+            const obj = {
+                a: {
+                    b: {
+                        c: 1,
+                        d: 2,
+                    },
+                },
+            };
+
+            const entries = generateFlatPathsDown(obj, () => true);
+            const answers = [
+                ['a', 'b', 'c', 1],
+                ['a', 'b', 'd', 2],
+            ];
+
+            expect(entries).to.deep.equal(answers);
         });
     });
 });

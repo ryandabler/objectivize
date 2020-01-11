@@ -1,5 +1,6 @@
 import { types, isOneOf, isArrayOf } from 'tupos';
 import { normalizeParams, ensureParams } from './decorators';
+import { keys } from './prototype';
 
 const {
     $OBJECT,
@@ -253,6 +254,34 @@ const hasObjectPathAndValue = ensureParams(
     exists
 );
 
+/**
+ * Generates an array of flat paths.
+ *
+ * Each flat path is an array where all but the last element represents a key down the
+ * object. The last element is the value for the object. In order to determine if the
+ * function should recurse down a segment of an object, a `shouldTraverse` function
+ * is called.
+ *
+ * @param {Object} obj
+ * @param {Function} shouldTraverse
+ * @returns {Array<Array>}
+ */
+const generateFlatPathsDown = (obj, shouldTraverse) =>
+    Object.entries(obj)
+        .map(([key, value]) => {
+            const isTraversable = isKeyed(value) && keys(value).length > 0;
+            if (isTraversable && shouldTraverse(value, key, obj)) {
+                return generateFlatPathsDown(
+                    value,
+                    shouldTraverse,
+                    obj
+                ).map(b => [key, ...b]);
+            }
+
+            return [[key, value]];
+        })
+        .flat();
+
 export {
     compose,
     isKeyed,
@@ -268,4 +297,5 @@ export {
     hasObjectAndPath,
     hasObjectPathAndValue,
     hasObjectPathAndMaybeValue,
+    generateFlatPathsDown,
 };
