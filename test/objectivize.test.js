@@ -472,7 +472,7 @@ describe('objectivize.js', function() {
 
             expect(mapFn.callCount).to.equal(_entries.length);
             _entries.forEach(([key, val]) => {
-                mapFn.calledWithExactly(key, val);
+                expect(mapFn.calledWithExactly(key, val)).to.be.true;
             });
         });
     });
@@ -504,7 +504,7 @@ describe('objectivize.js', function() {
 
             expect(mapFn.callCount).to.equal(_keys.length);
             _keys.forEach(key => {
-                mapFn.calledWithExactly(key);
+                expect(mapFn.calledWithExactly(key)).to.be.true;
             });
         });
     });
@@ -536,7 +536,7 @@ describe('objectivize.js', function() {
 
             expect(mapFn.callCount).to.equal(_values.length);
             _values.forEach(value => {
-                mapFn.calledWithExactly(value);
+                expect(mapFn.calledWithExactly(value)).to.be.true;
             });
         });
     });
@@ -554,7 +554,7 @@ describe('objectivize.js', function() {
 
             expect(findFn.callCount).to.equal(_entries.length);
             _entries.forEach(([key, value]) => {
-                findFn.calledWithExactly(key, value, obj);
+                expect(findFn.calledWithExactly(key, value, obj)).to.be.true;
             });
         });
 
@@ -597,7 +597,7 @@ describe('objectivize.js', function() {
 
             expect(findFn.callCount).to.equal(_entries.length);
             _entries.forEach(([key, value]) => {
-                findFn.calledWithExactly(key, value, obj);
+                expect(findFn.calledWithExactly(key, value, obj)).to.be.true;
             });
         });
 
@@ -639,7 +639,7 @@ describe('objectivize.js', function() {
 
             expect(findFn.callCount).to.equal(_entries.length);
             _entries.forEach(([key, value]) => {
-                findFn.calledWithExactly(key, value, obj);
+                expect(findFn.calledWithExactly(key, value, obj)).to.be.true;
             });
         });
 
