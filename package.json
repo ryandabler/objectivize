@@ -1,8 +1,9 @@
 {
     "name": "objectivize",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "An object-manipulation utility library",
-    "main": "lib/index.js",
+    "main": "lib/objectivize.umd.js",
+    "module": "lib/objectivize.esm.js",
     "scripts": {
         "test": "mocha --require esm --exit",
         "compile": "./node_modules/.bin/rollup -c",
